@@ -20,6 +20,9 @@
  * 		
  */
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 
 // Processing classes (including graphics)
@@ -31,10 +34,40 @@ public class MusicSwarm  {
 
 //	tried to make this a running thing on my computer
 	public static void main(String args[]){
-		Population pop = new Population(4);
-		pop.time_mayfly();
-		pop.popt.get(0).build_a_tree();
+		// Population pop = new Population(4);
+		// pop.time_mayfly();
+		// pop.popt.get(0).build_a_tree();
 		
+		//
+		// testing node class
+		//
+		GPNode n = new GPNode(GPNode.NodeType.IF, null, null, "", 38, GPNode.ReturnType.B);
+		System.out.println("return type should be B: " + n.rt);
+		System.out.println("getting depth... should be 1: " + n.get_depth());
+		int lo = 0;
+		int hi = 2;
+		System.out.println("random value int test, should be a value 0-2: " + GPNode.randomVal(lo, hi));
+		float low = 0;
+		float high = 2;
+		System.out.println("random value float test, should be a value 0-2: " + GPNode.randomVal(low, high));
+		GPNode no = new GPNode(GPNode.NodeType.LT, n, null, "", 38, GPNode.ReturnType.F);
+		System.out.println("getting depth... should be 2: " + no.get_depth());
+		List<GPNode> kid = new ArrayList<GPNode>();
+		kid.add(no);
+		n.children = kid;
+		System.out.println("getting child rt of root, should be F: " + n.children.get(0).rt);
+		GPNode nod = new GPNode(GPNode.NodeType.SEQUENCE, no, null, "", 389, GPNode.ReturnType.N);
+		GPNode node = new GPNode(GPNode.NodeType.ADD, no, null, "", 389, GPNode.ReturnType.F);
+		kid.add(nod);
+		kid.remove(no);
+
+		ArrayList kidclone = (ArrayList) kid.clone();
+		no.children = kidclone;
+		
+		kid.add(node);
+		System.out.println("getting 1st grandchild const val of root, should be 389.0: " + no.children.get(0).constValue);
+		System.out.println("getting 2nd grandchild const val of root, should be F: " + no.children.get(1).rt);
+
 	}
 
 	
