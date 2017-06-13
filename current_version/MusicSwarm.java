@@ -64,7 +64,8 @@ public class MusicSwarm  {
 		ArrayList kidclone = (ArrayList) kid.clone();
 		no.children = kidclone;
 		
-		kid.add(node);
+		//kid.add(node);
+
 		System.out.println("getting 1st grandchild const val of root, should be 389.0: " + no.children.get(0).constValue);
 		System.out.println("getting 2nd grandchild const val of root, should be F: " + no.children.get(1).rt);
 
