@@ -6,7 +6,7 @@ with holding both booleans and doubles
 public class ReturnValue {
 	
 	//for the equivalent of null in floats
-	private float float_null = -Float.MAX_VALUE;
+	private float float_null = -float.MAX_VALUE;
 
 	private float valueFloat = float_null;
 	private boolean valueBoolean = false;

@@ -40,7 +40,7 @@ public class GPNode {
 	//  iff the probability of selecting a terminal-ish nodetype is 100%.
 	//
 	public static NodeType[] allBoolReturn = {NodeType.LT, NodeType.GT, NodeType.LEQ, NodeType.GEQ, NodeType.EQ, NodeType.AND, NodeType.OR, NodeType.NEG};
-	public static NodeType[] allFloatReturn = {NodeType.VAR, NodeType.CONST, NodeType.ADD, NodeType.SUB, NodeType.MULT, NodeType.DIV, NodeType.EXP};
+	public static NodeType[] allfloatReturn = {NodeType.VAR, NodeType.CONST, NodeType.ADD, NodeType.SUB, NodeType.MULT, NodeType.DIV, NodeType.EXP};
 	public static NodeType[] allReturn = {
 								NodeType.LT, NodeType.GT, NodeType.LEQ, NodeType.GEQ, NodeType.EQ,
 								NodeType.AND, NodeType.OR, NodeType.NEG,
@@ -49,7 +49,7 @@ public class GPNode {
 								NodeType.SEQUENCE, NodeType.IF, NodeType.ASSIGN, NodeType.INC, NodeType.DEC
 							};
 	public static NodeType[] terminalBool =  {NodeType.LT, NodeType.GT, NodeType.LEQ, NodeType.GEQ, NodeType.EQ};
-	public static NodeType[] terminalFloat = {NodeType.VAR, NodeType.CONST};
+	public static NodeType[] terminalfloat = {NodeType.VAR, NodeType.CONST};
 	public static NodeType[] terminalAll = {
 								NodeType.LT, NodeType.GT, NodeType.LEQ, NodeType.GEQ, NodeType.EQ,
 								NodeType.VAR, NodeType.CONST,
@@ -81,19 +81,26 @@ public class GPNode {
 	//
 	public NodeType nodeType;
 	public GPNode parent;
-	public List<GPNode> children;
+	public ArrayList<GPNode> children;
 	public String varName;
 	public float constValue;
 	public ReturnType rt;
 
 
 
-	GPNode(NodeType nodeType, GPNode parent, List<GPNode> children,
+	GPNode(NodeType nodeType, GPNode parent, ArrayList<GPNode> children,
 			String varName, float constValue, ReturnType rt) {
+
 
 		this.nodeType = nodeType;
 		this.parent = parent;
-		this.children = children;
+		
+		if(children == null){
+			children = new ArrayList<GPNode>();
+		} else{
+			this.children = children;
+		}
+		
 		this.varName = varName;
 		this.constValue = constValue;
 		this.rt = rt;
@@ -274,8 +281,8 @@ public class GPNode {
 
 	// for generating a nodeType when making trees
 	public static NodeType terminal_type(float floatFlag){
-		int randVal = randomVal(0, terminalFloat.length);
-		return terminalFloat[randVal];
+		int randVal = randomVal(0, terminalfloat.length);
+		return terminalfloat[randVal];
 	}
 	public static NodeType terminal_type(boolean boolFlag){
 		int randVal = randomVal(0, terminalBool.length);
@@ -288,8 +295,8 @@ public class GPNode {
 
 	// for nodes that just won't end
 	public static NodeType active_type(float floatFlag){
-		int randVal = randomVal(0, allFloatReturn.length);
-		return allFloatReturn[randVal];
+		int randVal = randomVal(0, allfloatReturn.length);
+		return allfloatReturn[randVal];
 	}
 	public static NodeType active_type(boolean boolFlag){
 		int randVal = randomVal(0, allBoolReturn.length);

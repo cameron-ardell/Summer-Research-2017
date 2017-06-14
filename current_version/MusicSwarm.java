@@ -52,7 +52,7 @@ public class MusicSwarm  {
 		System.out.println("random value float test, should be a value 0-2: " + GPNode.randomVal(low, high));
 		GPNode no = new GPNode(GPNode.NodeType.LT, n, null, "", 38, GPNode.ReturnType.F);
 		System.out.println("getting depth... should be 2: " + no.get_depth());
-		List<GPNode> kid = new ArrayList<GPNode>();
+		ArrayList<GPNode> kid = new ArrayList<GPNode>();
 		kid.add(no);
 		n.children = kid;
 		System.out.println("getting child rt of root, should be F: " + n.children.get(0).rt);
@@ -63,8 +63,8 @@ public class MusicSwarm  {
 
 		ArrayList kidclone = (ArrayList) kid.clone();
 		no.children = kidclone;
-		
-		//kid.add(node);
+		// no.children = kid;
+		kid.add(node);
 
 		System.out.println("getting 1st grandchild const val of root, should be 389.0: " + no.children.get(0).constValue);
 		System.out.println("getting 2nd grandchild const val of root, should be F: " + no.children.get(1).rt);
