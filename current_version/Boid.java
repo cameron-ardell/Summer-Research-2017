@@ -293,7 +293,7 @@ public class Boid {
 //	}
 
     
-    // called by a ProgramNode when it needs the value of a variable in the Boid object
+    // called by a GPNode when it needs the value of a variable in the Boid object
     public float getVarValue(String varName) {
         
         
@@ -351,7 +351,7 @@ public class Boid {
         
     }
     
-    // called by a ProgramNode when it needs to assign a value to variable in the Boid object
+    // called by a GPNode when it needs to assign a value to variable in the Boid object
     public void assignVariable(String varName, float value) {
 
         
@@ -407,7 +407,7 @@ public class Boid {
         
     }
     
-    // called by a ProgramNode when it needs increment a variable in the Boid object
+    // called by a GPNode when it needs increment a variable in the Boid object
     public void increment(String varName) {
         
         
@@ -463,7 +463,7 @@ public class Boid {
     }
     
     
-    // called by a ProgramNode when it needs decrement a variable in the Boid object
+    // called by a GPNode when it needs decrement a variable in the Boid object
     public void decrement(String varName) {
 
         

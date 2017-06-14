@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Random;
 
 //somehow is including class of ReturnValue
@@ -87,22 +85,35 @@ public class GPNode {
 	public ReturnType rt;
 
 
-
+	// Constructor for if have all info
 	GPNode(NodeType nodeType, GPNode parent, ArrayList<GPNode> children,
 			String varName, float constValue, ReturnType rt) {
-
 
 		this.nodeType = nodeType;
 		this.parent = parent;
 		
 		if(children == null){
-			children = new ArrayList<GPNode>();
+			this.children = new ArrayList<GPNode>();
 		} else{
 			this.children = children;
 		}
 		
 		this.varName = varName;
 		this.constValue = constValue;
+		this.rt = rt;
+	}
+
+	// Constructor for if have only return type, parent
+	GPNode(GPNode parent, ReturnType rt) {
+
+		//assigning any type for now
+		if (rt == ReturnType.F) {
+			this.nodeType = NodeType.ADD;
+		} else{
+			this.nodeType = NodeType.GT;
+		}
+		this.parent = parent;
+		this.children = new ArrayList<GPNode>();
 		this.rt = rt;
 	}
 

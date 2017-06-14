@@ -1,10 +1,7 @@
-
+import java.util.ArrayList;
 
 
 public class GPTree {
-	
-	// For the equivalent of null in floats
-	static float float_null = -Float.MAX_VALUE;
 	
 	// All the possible names of variables from Steve code to pick randomly
 	public static String[] var_names = {"velocityScale", "maxSpeed", "normalSpeed", "neighborRadius",
@@ -47,12 +44,12 @@ public class GPTree {
 		int numKids = determineKidNum(type);
 
 		// The root has a type, no parents, no children, no variable name, no const value
-		root = new GPNode(type, null, null, null, float_null, GPNode.ReturnType.N);
-
-		GPNode.ReturnType t = GPNode.ReturnType.B;
+		root = new GPNode(null, GPNode.ReturnType.N);
+		root.nodeType = type;
 
 		// Currently writing only IF statements for root node
 		// so children rt is B, N, and optional N (for IF-ELSE)
+		GPNode.ReturnType t = GPNode.ReturnType.B;
 		for(int i = 0; i < numKids; i++){
 			//get required type
 			if(i == 1){	t = GPNode.ReturnType.N; }
@@ -65,11 +62,194 @@ public class GPTree {
 		return root;
 	}
 
-	public GPNode generateSubtree(float depth, GPNode parent, GPNode.ReturnType rt){
+	public static GPNode generateSubtree(float depth, GPNode parent, GPNode.ReturnType rt){
+		
+		// First need to determine probability that will be terminal
+		float term_threshold = 100 * depth / max_depth;
+		float randVal = GPNode.randomVal(0, 100);
 
-		return null;
+		//values that will be needed for creation of subrootine, regardless of case and NodeType
+		GPNode subrootine = new GPNode(parent, rt);
+		GPNode.NodeType pick;
+		boolean terminal = false; // <-- to be used later when making recursive call
+		int rand_index;
+		String var_name;
+
+		//
+		// TERMINAL CASE
+		//
+		if (randVal <= term_threshold) {
+			terminal = true;
+			//setting NodeType for all nodes, and var/ const for edge cases
+			if(rt == GPNode.ReturnType.F){
+				float flag = 1;
+				pick = GPNode.terminal_type(flag);
+			} else if (rt == GPNode.ReturnType.B){
+				boolean flag = true;
+				pick = GPNode.terminal_type(flag);
+			} else if (rt == GPNode.ReturnType.N){
+				pick = GPNode.terminal_type();
+			} else {
+				System.out.println("Tried to create new terminal node at undefined return type");
+				return null;
+			}
+			subrootine.nodeType = pick;
+		}
+		//
+		// END OF TERMINAL SPECIFIC COMMANDS
+		//
+		// BEGINNING OF ACTIVE COMMANDS
+		//
+		else{
+			if(rt == GPNode.ReturnType.F){
+				float flag = 1;
+				pick = GPNode.active_type(flag);
+			} else if (rt == GPNode.ReturnType.B){
+				boolean flag = true;
+				pick = GPNode.active_type(flag);
+			} else if (rt == GPNode.ReturnType.N){
+				pick = GPNode.active_type();
+			} else {
+				System.out.println("Tried to create new active node at undefined return type");
+				return null;
+			}
+		}
+
+		subrootine.nodeType = pick;
+		
+		// accommodate VAR and CONST need assignments
+		if (pick == GPNode.NodeType.CONST){
+			subrootine.constValue = GPNode.randomVal(min_const, max_const);
+		} else if (pick == GPNode.NodeType.VAR){
+			rand_index = GPNode.randomVal(0, var_names.length);
+			subrootine.varName = var_names[rand_index];
+		}
+
+		//
+		// ADDING CHILDREN
+		//
+		ArrayList<GPNode> kids = new ArrayList<GPNode>();
+		if(terminal == false){
+			kids = addChildren(depth+1, pick, subrootine);
+		} else {
+			kids = addChildren(max_depth, pick, subrootine);
+		}
+		subrootine.children = kids;
+
+
+		return subrootine;
 	}
 
+	public static ArrayList<GPNode> addChildren(float depth, GPNode.NodeType nt, GPNode parent){
+
+		//what will be returned (the kids with full subtrees)
+		ArrayList<GPNode> kids = new ArrayList<GPNode>();
+
+		//Parameters needed for recursive call
+		int numKids;
+		GPNode.ReturnType childRT = GPNode.ReturnType.N;
+		int rand_index;
+		String var_name;
+		GPNode child;
+
+		// making recursive call for every kind but VAR and CONST (those have no children)
+		switch(nt) {
+			case VAR:
+			case CONST:
+				break;
+	
+			case SEQUENCE:
+				numKids = GPNode.randomVal(2, max_seq+1);
+
+				for(int i = 0; i < numKids; i++){
+					child = generateSubtree(depth, parent, childRT);
+					kids.add(child);
+				}
+				break;
+	
+			case IF:
+				numKids = GPNode.randomVal(2, 4); //for IF-ELSE, randomVal is exclusive for upper limit
+
+				// first child must be a boolean value
+				child = generateSubtree(depth, parent, GPNode.ReturnType.B);
+				kids.add(child);
+
+				for(int i = 1; i < numKids; i++){
+					child = generateSubtree(depth, parent, childRT);
+					kids.add(child);
+				}
+				break;
+	
+			case ASSIGN:
+			case INC:
+			case DEC:
+				rand_index = GPNode.randomVal(0, var_names.length);
+				var_name = var_names[rand_index];
+
+				//first child must be variable value
+				child = new GPNode(parent, GPNode.ReturnType.F);
+				child.varName = var_name;
+				child.nodeType = GPNode.NodeType.VAR;
+				kids.add(child);
+
+				if(nt == GPNode.NodeType.ASSIGN){
+					child = generateSubtree(depth, parent, GPNode.ReturnType.F);
+					kids.add(child);
+				}
+				break;
+
+			case ADD:
+			case SUB:
+			case MULT:
+			case DIV:
+			case EXP:
+				child = generateSubtree(depth, parent, GPNode.ReturnType.F);
+				kids.add(child);
+				child = generateSubtree(depth, parent, GPNode.ReturnType.F);
+				kids.add(child);
+				break;
+
+			case EQ:
+			case LT:
+			case GT:
+			case LEQ:
+			case GEQ:
+				child = generateSubtree(depth, parent, GPNode.ReturnType.F);
+				kids.add(child);
+
+				if (child.nodeType == GPNode.NodeType.VAR){
+					child = generateSubtree(depth, parent, GPNode.ReturnType.F);
+					kids.add(child);
+				} else {
+					rand_index = GPNode.randomVal(0, var_names.length);
+					var_name = var_names[rand_index];
+
+					child = new GPNode(parent, GPNode.ReturnType.F);
+					child.varName = var_name;
+					child.nodeType = GPNode.NodeType.VAR;
+					kids.add(child);
+				}
+				break;
+
+			case OR:
+			case AND:
+				child = generateSubtree(depth, parent, GPNode.ReturnType.B);
+				kids.add(child);
+				child = generateSubtree(depth, parent, GPNode.ReturnType.B);
+				kids.add(child);
+				break;
+
+			case NEG:
+				child = generateSubtree(depth, parent, GPNode.ReturnType.B);
+				kids.add(child);
+				break;
+
+			default:
+				System.out.println("error: undefined NodeType in child construction " + nt);
+				System.exit(0);
+		}
+		return kids;
+	}
 
 	public int determineKidNum(GPNode.NodeType type){
 		int numKids = 0;

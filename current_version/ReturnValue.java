@@ -5,15 +5,12 @@ with holding both booleans and doubles
 
 public class ReturnValue {
 	
-	//for the equivalent of null in floats
-	private float float_null = -float.MAX_VALUE;
-
-	private float valueFloat = float_null;
+	private float valueFloat = 0;
 	private boolean valueBoolean = false;
 	private String valueString = null;
 
 	public ReturnValue(){
-		valueFloat = float_null;
+		valueFloat = 0;
 		valueBoolean = false;
 		this.valueString = null;
 	}
@@ -26,13 +23,13 @@ public class ReturnValue {
 
 
 	public ReturnValue(boolean valueBoolean){
-		valueFloat = float_null;
+		valueFloat = 0;
 		this.valueBoolean = valueBoolean;
 		this.valueString = null;
 	}
 
 	public ReturnValue(String valueString){
-		valueFloat = float_null;
+		valueFloat = 0;
 		valueBoolean = false;
 		this.valueString = valueString;
 	}
