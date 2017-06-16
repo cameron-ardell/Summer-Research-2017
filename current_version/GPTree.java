@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Queue;
+import java.util.LinkedList;
 
 
 public class GPTree {
@@ -265,5 +267,48 @@ public class GPTree {
 		}
 		return numKids;
 	}
+
+
+	// Takes current tree and sorts into arraylist that is DFS ordered
+	public ArrayList<GPNode> toArrayList(){
+
+		Queue<GPNode> queue = new LinkedList<GPNode>();
+		ArrayList<GPNode> orderedTree = new ArrayList<GPNode>();
+
+		queue.add(root);
+
+		GPNode cur_node;
+		ArrayList<GPNode> kids;
+
+		//go through queue while it isn't empty
+		while(!queue.isEmpty()){
+			//get highest, leftmost node
+			cur_node = queue.remove();
+
+			//get kids of cur_node, add to queue
+			kids = cur_node.children;
+			for(int i = 0; i<kids.size();i++){
+				queue.add( kids.get(i) );
+			}
+
+			//put cur_node into ordered arraylist
+			orderedTree.add(cur_node);
+		}
+
+		return orderedTree;
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 }
