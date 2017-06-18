@@ -41,6 +41,7 @@ public class MusicSwarm  {
 		//
 		// testing node class
 		//
+		/*
 		GPNode n = new GPNode(GPNode.NodeType.IF, null, null, "", 38, GPNode.ReturnType.B);
 		System.out.println("return type should be B: " + n.rt);
 		System.out.println("getting depth... should be 1: " + n.get_depth());
@@ -68,7 +69,14 @@ public class MusicSwarm  {
 
 		System.out.println("getting 1st grandchild const val of root, should be 389.0: " + no.children.get(0).constValue);
 		System.out.println("getting length of childless node children arraylist, should be 0 : " + node.children.size());
-
+		*/
+		float minc = 0;
+		float maxc = 1000;
+		float maxd = 2;
+		int maxs = 5;
+		GPTree tree = new GPTree(minc,maxc,maxd,maxs);
+		tree.generateNewTree();
+		tree.printTree();
 	}
 
 	

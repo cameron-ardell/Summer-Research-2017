@@ -84,6 +84,9 @@ public class GPNode {
 	public float constValue;
 	public ReturnType rt;
 
+	// Only for conversion to arraylist
+	public int index;
+
 
 	// Constructor for if have all info
 	GPNode(NodeType nodeType, GPNode parent, ArrayList<GPNode> children,
@@ -115,6 +118,7 @@ public class GPNode {
 		this.parent = parent;
 		this.children = new ArrayList<GPNode>();
 		this.rt = rt;
+		this.index = 0;
 	}
 
 

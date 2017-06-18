@@ -161,7 +161,7 @@ public class GPTree {
 				break;
 	
 			case SEQUENCE:
-				numKids = GPNode.randomVal(2, max_seq+1);
+				numKids = determineKidNum(nt);
 
 				for(int i = 0; i < numKids; i++){
 					child = generateSubtree(depth, parent, childRT);
@@ -170,7 +170,7 @@ public class GPTree {
 				break;
 	
 			case IF:
-				numKids = GPNode.randomVal(2, 4); //for IF-ELSE, randomVal is exclusive for upper limit
+				numKids = determineKidNum(nt);
 
 				// first child must be a boolean value
 				child = generateSubtree(depth, parent, GPNode.ReturnType.B);
@@ -253,10 +253,10 @@ public class GPTree {
 		return kids;
 	}
 
-	public int determineKidNum(GPNode.NodeType type){
+	public static int determineKidNum(GPNode.NodeType type){
 		int numKids = 0;
 		if(type == GPNode.NodeType.IF){
-			numKids = GPNode.randomVal(2,3);
+			numKids = GPNode.randomVal(2,4);
 		}
 		else if (type == GPNode.NodeType.SEQUENCE){
 			numKids = GPNode.randomVal(2, max_seq+1);
@@ -279,6 +279,7 @@ public class GPTree {
 
 		GPNode cur_node;
 		ArrayList<GPNode> kids;
+		int index_counter = 0;
 
 		//go through queue while it isn't empty
 		while(!queue.isEmpty()){
@@ -293,9 +294,38 @@ public class GPTree {
 
 			//put cur_node into ordered arraylist
 			orderedTree.add(cur_node);
+			//save index as attribute of node
+			cur_node.index = index_counter;
+			index_counter++;
 		}
 
 		return orderedTree;
+	}
+
+
+	public void printTree(){
+
+		ArrayList<GPNode> treeList = toArrayList();
+
+		System.out.println("number of nodes: " + treeList.size());
+
+		//walk through all nodes so can draw tree by hand
+		for(int i = 0; i < treeList.size(); i++){
+			GPNode cur_node = treeList.get(i);
+			System.out.println("Node: " + i);
+			System.out.println("Type: " + cur_node.nodeType);
+			if (i == 0){
+				System.out.println("Parent: none");
+			} else{
+				System.out.println("Parent: " + cur_node.parent.index);
+			}
+
+			for(int j = 0; j < cur_node.children.size(); j++){
+				System.out.println("Child: " + cur_node.children.get(j).index);
+			}
+
+			System.out.println();
+		}
 	}
 
 
