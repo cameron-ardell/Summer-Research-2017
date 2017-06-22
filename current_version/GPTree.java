@@ -36,6 +36,16 @@ public class GPTree {
 		GPTree.max_depth = max_depth;
 		GPTree.max_seq = max_seq;
 	}
+
+	//for making tree that is a duplicate
+	public GPTree(GPTree another){
+		fitness = 0;
+		this.root = another.root;
+		GPTree.min_const = another.min_const;
+		GPTree.max_const = another.max_const;
+		GPTree.max_depth = another.max_depth;
+		GPTree.max_seq = another.max_seq;
+	}
 	
 
 	//for generating new tree without an existing root

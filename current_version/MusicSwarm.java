@@ -72,7 +72,7 @@ public class MusicSwarm  {
 		*/
 		float minc = 0;
 		float maxc = 1000;
-		float maxd = 2;
+		float maxd = 5;
 		int maxs = 5;
 		GPTree tree = new GPTree(minc,maxc,maxd,maxs);
 		tree.generateNewTree();

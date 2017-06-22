@@ -5,37 +5,41 @@ with holding both booleans and doubles
 
 public class ReturnValue {
 	
-	private float valueFloat = 0;
+	//for the equivalent of null in doubles
+	private double double_null = -Double.MAX_VALUE;
+
+	private double valueDouble = double_null;
 	private boolean valueBoolean = false;
 	private String valueString = null;
 
 	public ReturnValue(){
-		valueFloat = 0;
+		valueDouble = double_null;
 		valueBoolean = false;
 		this.valueString = null;
 	}
 
-	public ReturnValue(float valueFloat){
-		this.valueFloat = valueFloat;
+	public ReturnValue(double valueDouble){
+		this.valueDouble = valueDouble;
 		valueBoolean = false;
 		this.valueString = null;
 	}
+
 
 	public ReturnValue(boolean valueBoolean){
-		valueFloat = 0;
+		valueDouble = double_null;
 		this.valueBoolean = valueBoolean;
 		this.valueString = null;
 	}
 
 	public ReturnValue(String valueString){
-		valueFloat = 0;
+		valueDouble = double_null;
 		valueBoolean = false;
 		this.valueString = valueString;
 	}
 
 
-	public void setReturnVal(float valueFloat) {
-		this.valueFloat = valueFloat;		
+	public void setReturnVal(double valueDouble) {
+		this.valueDouble = valueDouble;		
 	}
 
 	public void setReturnVal(boolean valueBoolean) {
@@ -46,9 +50,8 @@ public class ReturnValue {
 		this.valueString = valueString;		
 	}
 
-
-	public float getReturnVal(float floatFlag) {
-		return valueFloat;
+	public double getReturnVal(double doubleFlag) {
+		return valueDouble;
 	}
 
 	public boolean getReturnVal(boolean booleanFlag) {
