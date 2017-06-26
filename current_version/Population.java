@@ -33,17 +33,13 @@ public class Population{
 		int numnodes1 = nodes1.size();
 		int numnodes2 = nodes2.size();
 
-		t1.printTree();
-
 		// walk through each node on each tree with some probability of mutating
 		int rand = 0;
 		GPNode node;
 		for(int i = 0; i<numnodes1;i++){
 			node = nodes1.get(i);
 			rand = GPNode.randomVal(0, 100);
-			if(rand <= pm){
-				System.out.println("mutating node no. " + i);
-				single_mut(node);
+			if(rand <= pm){	single_mut(node);
 			}
 		}
 		for(int i = 0; i<numnodes2;i++){
@@ -52,7 +48,6 @@ public class Population{
 			if(rand <= pm){ single_mut(node); }
 		}
 
-		t1.printTree();	
 	}
 
 		/*
