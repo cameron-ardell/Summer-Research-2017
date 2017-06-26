@@ -339,7 +339,11 @@ public class GPTree {
 	}
 
 
+	public void printStats(){
+		ArrayList<GPNode> treeList = toArrayList();
 
+		System.out.println("number of nodes: " + treeList.size());
+	}
 
 
 

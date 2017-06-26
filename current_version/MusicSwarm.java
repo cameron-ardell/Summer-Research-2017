@@ -70,6 +70,12 @@ public class MusicSwarm  {
 		System.out.println("getting 1st grandchild const val of root, should be 389.0: " + no.children.get(0).constValue);
 		System.out.println("getting length of childless node children arraylist, should be 0 : " + node.children.size());
 		*/
+		
+
+		//
+		//testing tree class
+		//
+		/*
 		float minc = 0;
 		float maxc = 1000;
 		float maxd = 5;
@@ -77,6 +83,14 @@ public class MusicSwarm  {
 		GPTree tree = new GPTree(minc,maxc,maxd,maxs);
 		tree.generateNewTree();
 		tree.printTree();
+		*/
+
+
+		//
+		// testing population
+		//
+		int numTrees = 7;
+		Population popped = new Population(numTrees);
 	}
 
 	
