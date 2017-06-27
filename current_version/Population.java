@@ -5,11 +5,12 @@ public class Population{
 	int pm = 30; 	// percent probability of mutation
 	int pc = 72; 	// percent probability of crossover
 	int num_gen = 37; 	//number of generations of evolution
+	float k_as_frac_of_N = 0.2f; 	// portion of population to use in tournament selection
 
 	// for creating a tree. adjustable for user
 	float min_const = 0;
 	float max_const = 1000;
-	float max_depth = 4;
+	float max_depth = 6;
 	int max_seq = 5;
 
 	public Population(int numTrees){
@@ -22,10 +23,31 @@ public class Population{
 			pop.add(new_tree);
 		}
 
-		mutate(pop.get(0), pop.get(1));
+		int randFit;
+		for (int i = 0; i < numTrees; i++){
+			randFit = GPNode.randomVal(0, numTrees);
+			pop.get(i).fitness = randFit;
+		}
 
+
+		for (int i = 0; i < numTrees; i++){
+			System.out.print(i + ": ");
+			pop.get(i).printStats();
+		}
+
+		//mutate(pop.get(0), pop.get(1));
+		GPTree b = tournament_selection();
+		System.out.println();
+		b.printTree();
 	}
 
+
+	/*
+	 * Given two trees, mutate them at random points based
+	 *	on an already established mutation probability: pm
+	 * Input: two trees, t1 and t2
+	 * Output: void
+	*/
 	public void mutate(GPTree t1, GPTree t2){
 		ArrayList<GPNode> nodes1 = t1.toArrayList();
 		ArrayList<GPNode> nodes2 = t2.toArrayList();
@@ -50,8 +72,8 @@ public class Population{
 
 	}
 
-		/*
-	 * In this function, given a node, do single mutation 
+	/*
+	 * In this function, given a node, mutate  it based on relevant 
 	 * Input:	node - an existing node that you want to do the thing to
 	 * Output:	void
 	 */
@@ -110,6 +132,31 @@ public class Population{
 				System.out.println("error: undefined NodeType in single mutation");
 				System.out.println(selectType);
 				System.exit(0);
+		}
+	}
+
+	/*
+	 * Go through k of N of the population, select the most fit
+	 * Input: void
+	 * Output: most fit of k 
+	*/
+	public GPTree tournament_selection(){
+		GPTree best = null;
+		int n = pop.size();
+		float numTreesExact = k_as_frac_of_N * (float)n;
+		int k = (int)Math.round( numTreesExact );
+//		System.out.println("Given n = " + n + " trees, want " + k_as_frac_of_N + " of them, looking at: " + k + " trees.");
+		
+		GPTree cur;
+		for(int i = 0; i < k; i++){
+			int rand_ind = GPNode.randomVal(0, n);
+			System.out.println("number looked at: " + rand_ind);
+			cur = pop.get( rand_ind );
+			if( (best == null) || cur.fitness > best.fitness){
+				best = cur;
 			}
+		}
+
+		return best;
 	}
 }

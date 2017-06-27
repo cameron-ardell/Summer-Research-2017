@@ -26,7 +26,7 @@ public class GPTree {
 	public GPNode root;
 	
 	//needed for breeding
-	public static int fitness;
+	public int fitness;
 	
 	public GPTree(float min_const, float max_const, float max_depth, int max_seq){
 		fitness = 0;
@@ -39,7 +39,7 @@ public class GPTree {
 
 	//for making tree that is a duplicate
 	public GPTree(GPTree another){
-		fitness = 0;
+		fitness = another.fitness;
 		this.root = another.root;
 		GPTree.min_const = another.min_const;
 		GPTree.max_const = another.max_const;
@@ -343,6 +343,7 @@ public class GPTree {
 		ArrayList<GPNode> treeList = toArrayList();
 
 		System.out.println("number of nodes: " + treeList.size());
+		System.out.println("   fitness: " + fitness);
 	}
 
 
