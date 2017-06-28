@@ -23,6 +23,7 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 
 
 // Processing classes (including graphics)
@@ -34,6 +35,7 @@ public class MusicSwarm  {
 
 //	tried to make this a running thing on my computer
 	public static void main(String args[]){
+		Scanner scanner = new Scanner(System.in);
 		// Population pop = new Population(4);
 		// pop.time_mayfly();
 		// pop.popt.get(0).build_a_tree();
@@ -75,22 +77,32 @@ public class MusicSwarm  {
 		//
 		//testing tree class
 		//
-		/*
+		// /*
 		float minc = 0;
 		float maxc = 1000;
-		float maxd = 5;
+		float maxd = 10;
 		int maxs = 5;
 		GPTree tree = new GPTree(minc,maxc,maxd,maxs);
 		tree.generateNewTree();
 		tree.printTree();
-		*/
+		ArrayList<GPNode> list = tree.toArrayList();
+		int node_ind = 0;
+
+		while(node_ind != 9999){
+			System.out.print("enter node val to check depth of: ");
+			node_ind = scanner.nextInt();
+			int depth = list.get(node_ind).get_depth();
+			System.out.println(String.format("the depth is %d", depth));
+			System.out.println();
+		}
+		//*/
 
 
 		//
 		// testing population
 		//
-		int numTrees = 13;
-		Population popped = new Population(numTrees);
+		// int numTrees = 13;
+		// Population popped = new Population(numTrees);
 	}
 
 	

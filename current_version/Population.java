@@ -150,7 +150,7 @@ public class Population{
 		GPTree cur;
 		for(int i = 0; i < k; i++){
 			int rand_ind = GPNode.randomVal(0, n);
-			System.out.println("number looked at: " + rand_ind);
+			// System.out.println("number looked at: " + rand_ind);
 			cur = pop.get( rand_ind );
 			if( (best == null) || cur.fitness > best.fitness){
 				best = cur;
@@ -159,4 +159,45 @@ public class Population{
 
 		return best;
 	}
+
+	public void single_crossover(GPTree t1, GPTree t2){
+
+		ArrayList<GPNode> nodes1 = t1.toArrayList();
+		ArrayList<GPNode> nodes2 = t2.toArrayList();
+
+		int numnodes1 = nodes1.size();
+		int numnodes2 = nodes2.size();
+
+		//find a node in t1 that is swappable with other nodes in t2
+		
+
+
+
+
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

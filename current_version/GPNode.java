@@ -336,10 +336,10 @@ public class GPNode {
 
 	//get depth of node recursively
 	public int get_depth(){
-		int depth = 1;
+		int depth = 0;
 
 		if(this.parent != null){
-			depth += this.parent.get_depth();
+			depth += 1  + this.parent.get_depth();
 		}
 		return depth;
 	}
