@@ -77,7 +77,7 @@ public class MusicSwarm  {
 		//
 		//testing tree class
 		//
-		// /*
+		 /*
 		float minc = 0;
 		float maxc = 1000;
 		float maxd = 10;
@@ -95,14 +95,14 @@ public class MusicSwarm  {
 			System.out.println(String.format("the depth is %d", depth));
 			System.out.println();
 		}
-		//*/
+		*/
 
 
 		//
 		// testing population
 		//
-		// int numTrees = 13;
-		// Population popped = new Population(numTrees);
+		int numTrees = 13;
+		Population popped = new Population(numTrees);
 	}
 
 	
