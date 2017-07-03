@@ -324,6 +324,7 @@ public class GPTree {
 			GPNode cur_node = treeList.get(i);
 			System.out.println("Node: " + i);
 			System.out.println("Type: " + cur_node.nodeType);
+			System.out.println("Return Type: " + cur_node.rt);
 			if (i == 0){
 				System.out.println("Parent: none");
 			} else{

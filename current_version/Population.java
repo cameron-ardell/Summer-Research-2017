@@ -6,11 +6,12 @@ public class Population{
 	int pc = 72; 	// percent probability of crossover
 	int num_gen = 37; 	//number of generations of evolution
 	float k_as_frac_of_N = 0.2f; 	// portion of population to use in tournament selection
+	int TRIES_MAX = 37; 	//max number of times to try to find compatible nodes for crossover
 
 	// for creating a tree. adjustable for user
 	float min_const = 0;
 	float max_const = 1000;
-	float max_depth = 6;
+	float max_depth = 3;
 	int max_seq = 5;
 
 	public Population(int numTrees){
@@ -29,16 +30,21 @@ public class Population{
 			pop.get(i).fitness = randFit;
 		}
 
+		// for (int i = 0; i < numTrees; i++){
+		// 	System.out.print(i + ": ");
+		// 	pop.get(i).printStats();
+		// }
+		GPTree t1 = pop.get(0);
+		GPTree t2 = pop.get(1);
 
-		for (int i = 0; i < numTrees; i++){
-			System.out.print(i + ": ");
-			pop.get(i).printStats();
-		}
+		System.out.println("t1: ");
+		t1.printTree();
+		System.out.println();System.out.println();
+		System.out.println("t2: ");
+		t2.printTree();
 
-		//mutate(pop.get(0), pop.get(1));
-		GPTree b = tournament_selection();
-		System.out.println();
-		b.printTree();
+		single_crossover(t1, t2);
+
 	}
 
 
@@ -168,16 +174,82 @@ public class Population{
 		int numnodes1 = nodes1.size();
 		int numnodes2 = nodes2.size();
 
+		int num_valid_nodes = 0;
+		GPNode node1;
+		int index = 0;
+		int tries = 0;
+		//for collecting applicable nodes in t2
+		ArrayList<Integer> applicable_node_indexes = new ArrayList<Integer>();
 		//find a node in t1 that is swappable with other nodes in t2
-		
+		while(num_valid_nodes == 0 && tries < TRIES_MAX){
+			applicable_node_indexes.clear();
+ 
+			//randomly select first node (but not the root)
+			index = GPNode.randomVal(1, numnodes1);
+			node1 = nodes1.get(index);
+			GPNode.ReturnType retType = node1.rt;
+					
 
+			//adding the relevant nodes
+			for(int i = 0; i < numnodes2; i++){
+				if(nodes2.get(i).rt == retType){
+					applicable_node_indexes.add(i);
+				}
+			}
 
+			num_valid_nodes = applicable_node_indexes.size();
+			tries++;
+		} 
+
+		System.out.println("Selected node " + index + " in t1.");
+		// System.out.println("Number of applicable nodes: " + num_valid_nodes);
+		System.out.println("Indexes of nodes in t2:");
+		for(int i = 0; i < num_valid_nodes; i++){
+			System.out.print(" " + applicable_node_indexes.get(i) + ", ");
+		}
+		System.out.println();
+
+		if(num_valid_nodes > 0){
+			ArrayList<Integer> weights = new ArrayList<Integer>();
+			//weight for each node candidate based on their depth
+			int wait;
+			for(int i = 0; i < num_valid_nodes; i++){
+				GPNode curNode = nodes2.get(applicable_node_indexes.get(i));
+				wait = curNode.get_depth();
+				weights.add(wait);
+			}
+
+			System.out.println("weights: ");
+			for(int i = 0; i < num_valid_nodes; i++){
+				System.out.print(" " + weights.get(i) + ",");
+			}
+			System.out.println();
+
+			int sec_index = selectIndexWeighted(weights);
+			System.out.println("second index: " + sec_index);
+
+		}
 
 
 	}
 
 
 
+	public int selectIndexWeighted(ArrayList<Integer> weights){
+
+		int sum = 0;
+		for ( int i = 0; i < weights.size(); i++){ sum += weights.get(i); }
+		System.out.println("sum: " + sum);
+
+		int threshold = GPNode.randomVal(0,sum);
+		int return_ind = 0;
+		int cur_sum = 0;
+		while(cur_sum < threshold){
+			cur_sum += weights.get(++return_ind);
+		}
+		System.out.println("cur_sum: " + cur_sum);
+		return  Math.max(0, return_ind-1);
+	}
 
 
 
