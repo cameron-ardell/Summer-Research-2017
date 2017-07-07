@@ -80,8 +80,8 @@ public class GPNode {
 	public NodeType nodeType;
 	public GPNode parent;
 	public ArrayList<GPNode> children;
-	public String varName;
-	public float constValue;
+	public String varName = "";
+	public float constValue = 0;
 	public ReturnType rt;
 
 	// Only for conversion to arraylist

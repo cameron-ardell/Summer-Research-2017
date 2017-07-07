@@ -4,14 +4,15 @@ public class Population{
 	public static ArrayList<GPTree> pop; //actual population of trees
 	int pm = 30; 	// percent probability of mutation
 	int pc = 72; 	// percent probability of crossover
-	int num_gen = 37; 	//number of generations of evolution
+	int NUM_GEN = 37; 	//number of generations of evolution
 	float k_as_frac_of_N = 0.2f; 	// portion of population to use in tournament selection
 	int TRIES_MAX = 37; 	//max number of times to try to find compatible nodes for crossover
+
 
 	// for creating a tree. adjustable for user
 	float min_const = 0;
 	float max_const = 1000;
-	float max_depth = 3;
+	float max_depth = 5;
 	int max_seq = 5;
 
 	public Population(int numTrees){
@@ -35,16 +36,80 @@ public class Population{
 		// 	pop.get(i).printStats();
 		// }
 		GPTree t1 = pop.get(0);
-		GPTree t2 = pop.get(1);
+		// GPTree t2 = pop.get(1);
 
-		System.out.println("t1: ");
-		t1.printTree();
-		System.out.println();System.out.println();
-		System.out.println("t2: ");
-		t2.printTree();
+		// System.out.println("t1: ");
+		// t1.printTree();
+		// int fit = calc_fit(t1);
+		// System.out.println("fitness: " + fit);
+		// System.out.println("\n\nt2: ");
+		// t2.printTree();
 
-		single_crossover(t1, t2);
+		// single_crossover(t1, t2);
 
+		// System.out.println("\n\n\nnew t1: ");
+		// t1.printTree();
+		// System.out.println("\n\nnew t2: ");
+		// t2.printTree();
+		single_gen();
+
+		System.out.println("\n\nt0 after:");
+		pop.get(0).printTree();
+	}
+
+	public void run(){
+		for(int i = 0; i < NUM_GEN; i++){
+			single_gen();
+		}
+	}
+
+
+
+	/*
+	* Runs one generation of crossover and mutation
+	* Input: void
+	* Output: void
+	*/
+	public void single_gen(){
+		ArrayList<GPTree> new_kids = new ArrayList<GPTree>();
+		int N = pop.size();
+		GPTree child1, child2, parent1, parent2;
+		int rand;
+		System.out.println("t0 before:");
+		pop.get(0).printTree();
+		while (new_kids.size() != N){
+			parent1 = tournament_selection();
+			child1 = new GPTree(parent1);
+			parent2 = tournament_selection();
+			child2 = new GPTree(parent2);
+
+			rand = GPNode.randomVal(0,100);
+			if(rand <= pc){ single_crossover(child1, child2); }
+			if(rand <= pm){ mutate(child1, child2); }
+
+			child1.fitness = calc_fit(child1);
+			child2.fitness = calc_fit(child2);
+			
+			new_kids.add(child1);
+			new_kids.add(child2);
+		}
+		pop = new_kids;
+	}
+
+
+
+	/*
+	 * Garbage calculating fitness
+	 */
+	public int calc_fit(GPTree tree) {
+		int num_add = 0;
+		ArrayList<GPNode> all_nodes = tree.toArrayList();
+		for (int i = 0; i < all_nodes.size(); i++) {
+			if (all_nodes.get(i).nodeType == GPNode.NodeType.VAR) {
+				num_add += 1;
+			}
+		}
+		return num_add;
 	}
 
 
@@ -52,7 +117,7 @@ public class Population{
 	 * Given two trees, mutate them at random points based
 	 *	on an already established mutation probability: pm
 	 * Input: two trees, t1 and t2
-	 * Output: void
+	 * Output: mutated trees
 	*/
 	public void mutate(GPTree t1, GPTree t2){
 		ArrayList<GPNode> nodes1 = t1.toArrayList();
@@ -166,6 +231,12 @@ public class Population{
 		return best;
 	}
 
+	/*
+	* Pick a point on each tree, swap all nodes at and below it (subtree)
+	* Input: the two trees to be swappped
+	* Output: void
+	*/
+
 	public void single_crossover(GPTree t1, GPTree t2){
 
 		ArrayList<GPNode> nodes1 = t1.toArrayList();
@@ -175,7 +246,7 @@ public class Population{
 		int numnodes2 = nodes2.size();
 
 		int num_valid_nodes = 0;
-		GPNode node1;
+		GPNode node1 = nodes1.get(0); // needed to initialize
 		int index = 0;
 		int tries = 0;
 		//for collecting applicable nodes in t2
@@ -190,10 +261,11 @@ public class Population{
 			GPNode.ReturnType retType = node1.rt;
 					
 
-			//adding the relevant nodes
-			for(int i = 0; i < numnodes2; i++){
+			//adding the relevant nodes, just not root
+			//nodes are ordered most->least depth
+			for(int i = 1; i < numnodes2; i++){
 				if(nodes2.get(i).rt == retType){
-					applicable_node_indexes.add(i);
+					applicable_node_indexes.add(0, i);
 				}
 			}
 
@@ -201,13 +273,7 @@ public class Population{
 			tries++;
 		} 
 
-		System.out.println("Selected node " + index + " in t1.");
-		// System.out.println("Number of applicable nodes: " + num_valid_nodes);
-		System.out.println("Indexes of nodes in t2:");
-		for(int i = 0; i < num_valid_nodes; i++){
-			System.out.print(" " + applicable_node_indexes.get(i) + ", ");
-		}
-		System.out.println();
+		// System.out.println("Selected node " + index + " in t1.");
 
 		if(num_valid_nodes > 0){
 			ArrayList<Integer> weights = new ArrayList<Integer>();
@@ -219,35 +285,62 @@ public class Population{
 				weights.add(wait);
 			}
 
-			System.out.println("weights: ");
-			for(int i = 0; i < num_valid_nodes; i++){
-				System.out.print(" " + weights.get(i) + ",");
-			}
-			System.out.println();
-
 			int sec_index = selectIndexWeighted(weights);
-			System.out.println("second index: " + sec_index);
+			int actual_sec_index = applicable_node_indexes.get(sec_index);
+			// System.out.println("Selected node " + actual_sec_index + " in t2.");
+			GPNode node2 = nodes2.get(actual_sec_index);
 
+
+			// save all info of first node as temp
+			GPNode.NodeType temp_nodeType = node1.nodeType;
+			ArrayList<GPNode> temp_children = node1.children;
+			String temp_varName = node1.varName;
+			float temp_constValue = node1.constValue;
+
+			// set node1's info as node2's
+			node1.nodeType = node2.nodeType;;
+			node1.children = node2.children;
+			node1.varName = node2.varName;
+			node1.constValue = node2.constValue;
+			//update new children's parent pointers
+			int num_kids = node1.children.size();
+			for (int i = 0; i < num_kids; i++){
+				node1.children.get(i).parent = node1;
+			}
+
+			// set node2's info as node1's
+			node2.nodeType = temp_nodeType;
+			// node2.parent = temp_parent;
+			node2.children = temp_children;
+			node2.varName = temp_varName;
+			node2.constValue = temp_constValue;
+			//update new children's parent pointers
+			num_kids = node2.children.size();
+			for (int i = 0; i < num_kids; i++){
+				node2.children.get(i).parent = node2;
+			}
 		}
 
 
 	}
 
 
-
+	/* Given an array of raw weights, NOT relative, randomly select
+	 * 	an index and return it.
+	 * Useful for crossover, single mutation, subtree mutation
+	 */
 	public int selectIndexWeighted(ArrayList<Integer> weights){
 
 		int sum = 0;
 		for ( int i = 0; i < weights.size(); i++){ sum += weights.get(i); }
-		System.out.println("sum: " + sum);
-
+		
 		int threshold = GPNode.randomVal(0,sum);
 		int return_ind = 0;
 		int cur_sum = 0;
 		while(cur_sum < threshold){
-			cur_sum += weights.get(++return_ind);
+			cur_sum += weights.get(return_ind);
+			return_ind += 1;
 		}
-		System.out.println("cur_sum: " + cur_sum);
 		return  Math.max(0, return_ind-1);
 	}
 

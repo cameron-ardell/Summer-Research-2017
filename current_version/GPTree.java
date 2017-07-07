@@ -39,7 +39,7 @@ public class GPTree {
 
 	//for making tree that is a duplicate
 	public GPTree(GPTree another){
-		fitness = another.fitness;
+		//this.fitness = another.fitness;
 		this.root = another.root;
 		GPTree.min_const = another.min_const;
 		GPTree.max_const = another.max_const;

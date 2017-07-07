@@ -101,7 +101,7 @@ public class MusicSwarm  {
 		//
 		// testing population
 		//
-		int numTrees = 2;
+		int numTrees = 12;
 		Population popped = new Population(numTrees);
 	}
 
