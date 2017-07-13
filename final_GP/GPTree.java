@@ -47,9 +47,34 @@ public class GPTree {
 		GPTree.max_seq = another.max_seq;
 	}
 	
-
 	//for generating new tree without an existing root
 	public GPNode generateNewTree() {
+		GPNode.NodeType type = GPNode.NodeType.SEQUENCE;
+
+		//determine number of kids
+		int numKids = determineKidNum(type);
+
+		// The root has a type, no parents, no children, no variable name, no const value
+		root = new GPNode(null, GPNode.ReturnType.N);
+		root.nodeType = type;
+
+		// Currently writing only SEQUENCE statements for root node
+		// so children rt is N, N, and 3 more optional N's
+		GPNode.ReturnType t = GPNode.ReturnType.N;
+		for(int i = 0; i < numKids; i++){
+			float depth = 2;
+			GPNode newChild = generateSubtree(depth, root, t);
+			root.children.add(newChild); 
+		}
+
+		return root;
+	}
+
+
+
+
+	//for generating new tree without an existing root
+	public GPNode generateNewIFTree() {
 		GPNode.NodeType type = GPNode.NodeType.IF;
 
 		//determine number of kids

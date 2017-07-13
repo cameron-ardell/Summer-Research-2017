@@ -6,7 +6,7 @@ import java.util.LinkedList;
 public class GPTree {
 	
 	// All the possible names of variables from Steve code to pick randomly
-	public static String[] var_names = {"velocityScale", "maxSpeed", "normalSpeed", "neighborRadius",
+	public static String[] var_names = {"maxSpeed", "normalSpeed", "neighborRadius",
 										"separationWeight", "alignmentWeight", "cohesionWeight", "pacekeepingWeight",
 										"randomMotionProbability", "numNeighborsOwnFlock", "numNeighborsAllFlocks"};
 			
@@ -329,6 +329,13 @@ public class GPTree {
 			GPNode cur_node = treeList.get(i);
 			System.out.println("Node: " + i);
 			System.out.println("Type: " + cur_node.nodeType);
+			if(cur_node.nodeType == GPNode.NodeType.VAR){
+				System.out.println("Variable: " + cur_node.varName);
+			}
+			if(cur_node.nodeType == GPNode.NodeType.CONST){
+				System.out.println("Constant Value: " + cur_node.constValue );
+			}
+			
 			System.out.println("Return Type: " + cur_node.rt);
 			if (i == 0){
 				System.out.println("Parent: none");

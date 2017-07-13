@@ -386,8 +386,9 @@ public class Particle {
 		if (!PSO.usingSPSO) {
 			Swarm.gpTree.run(this);
 			if (particleID == 0) {
-//				System.out.println("\nnumNeighborsOwnFlock = " + numNeighborsOwnFlock);
-//				printFlockParameters();
+				//System.out.println("\nnumNeighborsOwnFlock = " + numNeighborsOwnFlock);
+				printFlockParameters();
+				Swarm.gpTree.printTree();
 			}
 		}
 
@@ -466,7 +467,7 @@ public class Particle {
 	// called by a ProgramNode when it needs to assign a value to variable in the Particle object
 	public void assignVariable(String varName, double value) {
 
-//		System.out.println();
+		System.out.println("Assigning a variable");
 //		System.out.println(varName);
 
 		

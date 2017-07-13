@@ -4,7 +4,7 @@ public class Population{
 	public static ArrayList<GPTree> pop; //actual population of trees
 	int pm = 30; 	// percent probability of mutation
 	int pc = 72; 	// percent probability of crossover
-	int NUM_GEN = 37; 	//number of generations of evolution
+	int NUM_GEN = 1; 	//number of generations of evolution
 	double k_as_frac_of_N = 0.2; 	// portion of population to use in tournament selection
 	int TRIES_MAX = 37; 	//max number of times to try to find compatible nodes for crossover
 
@@ -16,6 +16,7 @@ public class Population{
 	int max_seq = 5;
 
 	public Population(int numTrees){
+		
 		this.pop = new ArrayList<GPTree>();
 		//generate the specified number of random trees
 		GPTree new_tree;
@@ -25,7 +26,7 @@ public class Population{
 			pop.add(new_tree);
 		}
 
-		int randFit;
+		//int randFit;
 		for (int i = 0; i < numTrees; i++){
 //			randFit = GPNode.randomVal(0, numTrees);
 			pop.get(i).fitness = calc_fit(pop.get(i));
@@ -35,7 +36,7 @@ public class Population{
 		// 	System.out.print(i + ": ");
 		// 	pop.get(i).printStats();
 		// }
-		GPTree t1 = pop.get(0);
+		//GPTree t1 = pop.get(0);
 		// GPTree t2 = pop.get(1);
 
 		// System.out.println("t1: ");
@@ -53,8 +54,8 @@ public class Population{
 		// t2.printTree();
 		single_gen();
 
-		System.out.println("\n\nt0 after:");
-		pop.get(0).printTree();
+		//System.out.println("\n\nt0 after:");
+		//pop.get(0).printTree();
 	}
 
 	public void run(){
