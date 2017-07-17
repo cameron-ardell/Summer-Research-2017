@@ -12,7 +12,7 @@ public class Population{
 	// for creating a tree. adjustable for user
 	double min_const = 0;
 	double max_const = 1000;
-	double max_depth = 10;
+	double max_depth = 4;
 	int max_seq = 5;
 
 	public Population(int numTrees){
@@ -22,15 +22,15 @@ public class Population{
 		GPTree new_tree;
 		for (int i = 0; i < numTrees; i++){
 			new_tree = new GPTree( min_const, max_const, max_depth, max_seq);
-			new_tree.generateNewTree();
+			new_tree.generateFormattedTree();
 			pop.add(new_tree);
 		}
 
-		//int randFit;
 		for (int i = 0; i < numTrees; i++){
-//			randFit = GPNode.randomVal(0, numTrees);
 			pop.get(i).fitness = calc_fit(pop.get(i));
 		}
+		
+		
 
 		// for (int i = 0; i < numTrees; i++){
 		// 	System.out.print(i + ": ");
@@ -52,8 +52,13 @@ public class Population{
 		// t1.printTree();
 		// System.out.println("\n\nnew t2: ");
 		// t2.printTree();
-		single_gen();
+		
+		
+		
+//		single_gen();
 
+		
+		
 		//System.out.println("\n\nt0 after:");
 		//pop.get(0).printTree();
 	}

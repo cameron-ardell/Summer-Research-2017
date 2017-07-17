@@ -29,7 +29,7 @@ public class GPNode {
 	// 	and for evolving
 	// F - double; B - boolean; N - null
 	//
-	public static enum ReturnType{F, B, N};
+	public static enum ReturnType{F, B, N, S};
 	
 	//
 	// Arrays for tree construction.
@@ -44,19 +44,19 @@ public class GPNode {
 								NodeType.AND, NodeType.OR, NodeType.NEG,
 								NodeType.VAR, NodeType.CONST, NodeType.ADD, NodeType.SUB,
 								NodeType.MULT, NodeType.DIV, NodeType.EXP,
-								NodeType.SEQUENCE, NodeType.IF, NodeType.ASSIGN, NodeType.INC, NodeType.DEC
+								NodeType.IF, NodeType.ASSIGN, NodeType.INC, NodeType.DEC
 							};
+	public static NodeType[] sequenceReturn = {NodeType.IF, NodeType.ASSIGN, NodeType.INC, NodeType.DEC};
 	public static NodeType[] terminalBool =  {NodeType.LT, NodeType.GT, NodeType.LEQ, NodeType.GEQ, NodeType.EQ};
 	public static NodeType[] terminaldouble = {NodeType.VAR, NodeType.CONST};
-	public static NodeType[] terminalAll = {
-								NodeType.LT, NodeType.GT, NodeType.LEQ, NodeType.GEQ, NodeType.EQ,
-								NodeType.VAR, NodeType.CONST,
-								NodeType.ASSIGN, NodeType.INC, NodeType.DEC
-							};
+	public static NodeType[] terminalAll = {NodeType.ASSIGN, NodeType.INC, NodeType.DEC};
+	
 	//Null return type arrays no longer using
 	//public static NodeType[] allNullReturn = {NodeType.SEQUENCE, NodeType.IF, NodeType.ASSIGN, NodeType.INC, NodeType.DEC};
 	//public static NodeType[] terminalNull = {NodeType.IF, NodeType.ASSIGN, NodeType.INC, NodeType.DEC};
-	
+	//public static NodeType[] termialAll = {NodeType.LT, NodeType.GT, NodeType.LEQ, NodeType.GEQ, NodeType.EQ,
+	//										NodeType.VAR, NodeType.CONST,
+	//										NodeType.ASSIGN, NodeType.INC, NodeType.DEC};
 
 
 	//
@@ -320,6 +320,10 @@ public class GPNode {
 	public static NodeType active_type(){
 		int randVal = randomVal(0, allReturn.length);
 		return allReturn[randVal];
+	}
+	public static NodeType active_type(String strFlag){
+		int randVal = randomVal(0, sequenceReturn.length);
+		return sequenceReturn[randVal];
 	}
 
 	

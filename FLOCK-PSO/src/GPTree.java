@@ -15,6 +15,7 @@ public class GPTree {
 	public static double max_const;
 
 	// The greatest number of nodes that can be in a sequence
+	public static int MIN_SEQ = 2;
 	public static int max_seq;
 	
 	// Restriction for tree approximate tree depth
@@ -27,6 +28,7 @@ public class GPTree {
 	
 	//needed for breeding
 	public double fitness;
+
 	
 	public GPTree(double min_const, double max_const, double max_depth, int max_seq){
 		fitness = 0;
@@ -46,6 +48,69 @@ public class GPTree {
 		GPTree.max_depth = another.max_depth;
 		GPTree.max_seq = another.max_seq;
 	}
+	
+	//for generating a more formatted tree
+	public GPNode generateFormattedTree(){
+		GPNode.NodeType type = GPNode.NodeType.IF;
+		root = new GPNode(null, GPNode.ReturnType.N);
+		root.nodeType = type;
+		
+		//# 1 relational operator
+		GPNode first_kid = new GPNode(root, GPNode.ReturnType.B);
+		first_kid.nodeType = GPNode.terminal_type(true);
+		root.children.add(first_kid);
+		
+		// #1a - variable
+		GPNode first_grandkid = new GPNode(first_kid, GPNode.ReturnType.F);
+		first_grandkid.nodeType = GPNode.NodeType.VAR;
+		int rand_index = GPNode.randomVal(0, var_names.length);
+		first_grandkid.varName = var_names[rand_index];
+		first_kid.children.add(first_grandkid);
+		
+		// #1b - var or constant
+		GPNode sec_grandkid = new GPNode(first_kid, GPNode.ReturnType.F);
+		double doubleFlag = 1;
+		sec_grandkid.nodeType = GPNode.terminal_type(doubleFlag);
+		if (sec_grandkid.nodeType == GPNode.NodeType.CONST){
+			sec_grandkid.constValue = GPNode.randomVal(min_const, max_const);
+		} else if (sec_grandkid.nodeType == GPNode.NodeType.VAR){
+			rand_index = GPNode.randomVal(0, var_names.length);
+			sec_grandkid.varName = var_names[rand_index];
+		}
+		first_kid.children.add(sec_grandkid);
+		
+		
+		// #2 - IF(TRUE) Sequence
+		GPNode sec_kid = new GPNode(root, GPNode.ReturnType.N);
+		sec_kid.nodeType = GPNode.NodeType.SEQUENCE;
+		int numKids = determineKidNum(sec_kid.nodeType);
+		root.children.add(sec_kid);
+		
+		GPNode.ReturnType t = GPNode.ReturnType.S;
+		for(int i = 0; i < numKids; i++){
+			double depth = 3;
+			GPNode newKid = generateSubtree(depth, sec_kid, t);
+			sec_kid.children.add(newKid);
+		}
+		
+		
+		// #3 - IF(FALSE) Sequence
+		GPNode tri_kid = new GPNode(root, GPNode.ReturnType.N);
+		tri_kid.nodeType = GPNode.NodeType.SEQUENCE;
+		numKids = determineKidNum(tri_kid.nodeType);
+		root.children.add(tri_kid);
+		
+		for(int i = 0; i < numKids; i++){
+			double depth = 3;
+			GPNode newKid = generateSubtree(depth, tri_kid, t);
+			tri_kid.children.add(newKid);
+		}
+		
+		return root;
+	}
+	
+	
+	
 	
 
 	//for generating new tree without an existing root
@@ -90,7 +155,7 @@ public class GPTree {
 		GPNode.NodeType pick;
 		boolean terminal = false; // <-- to be used later when making recursive call
 		int rand_index;
-		String var_name;
+//		String var_name;
 
 		//
 		// TERMINAL CASE
@@ -104,7 +169,7 @@ public class GPTree {
 			} else if (rt == GPNode.ReturnType.B){
 				boolean flag = true;
 				pick = GPNode.terminal_type(flag);
-			} else if (rt == GPNode.ReturnType.N){
+			} else if (rt == GPNode.ReturnType.N || rt == GPNode.ReturnType.S){
 				pick = GPNode.terminal_type();
 			} else {
 				System.out.println("Tried to create new terminal node at undefined return type");
@@ -126,6 +191,9 @@ public class GPTree {
 				pick = GPNode.active_type(flag);
 			} else if (rt == GPNode.ReturnType.N){
 				pick = GPNode.active_type();
+			} else if (rt == GPNode.ReturnType.S){
+				String flag = "flag";
+				pick = GPNode.active_type(flag);
 			} else {
 				System.out.println("Tried to create new active node at undefined return type");
 				return null;
@@ -274,7 +342,7 @@ public class GPTree {
 			numKids = GPNode.randomVal(2,4);
 		}
 		else if (type == GPNode.NodeType.SEQUENCE){
-			numKids = GPNode.randomVal(2, max_seq+1);
+			numKids = GPNode.randomVal(MIN_SEQ, max_seq+1);
 			// if computer is stupid, switch 2 to 1
 		}
 		else{
@@ -331,6 +399,7 @@ public class GPTree {
 			System.out.println("Type: " + cur_node.nodeType);
 			if(cur_node.nodeType == GPNode.NodeType.VAR){
 				System.out.println("Variable: " + cur_node.varName);
+				// System.out.println("Variable value: " + Particle.getVarValue(cur_node.varName) );
 			}
 			if(cur_node.nodeType == GPNode.NodeType.CONST){
 				System.out.println("Constant Value: " + cur_node.constValue );

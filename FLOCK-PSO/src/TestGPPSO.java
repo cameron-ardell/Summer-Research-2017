@@ -2,7 +2,7 @@
 public class TestGPPSO {
 
 	public static void main(String[] args) {
-		int numTrees = 12;
+		int numTrees = 1;
 		Population pop = new Population(numTrees);
 		
 	}
