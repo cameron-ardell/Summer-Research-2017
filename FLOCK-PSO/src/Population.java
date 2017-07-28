@@ -2,9 +2,8 @@ import java.util.ArrayList;
 
 public class Population{
 	public static ArrayList<GPTree> pop; //actual population of trees
-	int pm = 30; 	// percent probability of mutation
-	int pc = 72; 	// percent probability of crossover
-	int NUM_GEN = 1; 	//number of generations of evolution
+	int pm = 100; 	// percent probability of mutation
+	int pc = 100; 	// percent probability of crossover
 	double k_as_frac_of_N = 0.2; 	// portion of population to use in tournament selection
 	int TRIES_MAX = 37; 	//max number of times to try to find compatible nodes for crossover
 
@@ -12,10 +11,12 @@ public class Population{
 	// for creating a tree. adjustable for user
 	double min_const = 0;
 	double max_const = 1000;
-	double max_depth = 4;
-	int max_seq = 5;
+	double max_depth = 3;
+	int max_seq = 3;
 
-	public Population(int numTrees){
+	
+	public Population(int numGens, int numTrees, int numRuns){
+		
 		
 		this.pop = new ArrayList<GPTree>();
 		//generate the specified number of random trees
@@ -25,47 +26,29 @@ public class Population{
 			new_tree.generateFormattedTree();
 			pop.add(new_tree);
 		}
-
+		
+							
 		for (int i = 0; i < numTrees; i++){
-			pop.get(i).fitness = calc_fit(pop.get(i));
+			pop.get(i).fitness = calc_fit(pop.get(i), numRuns);
 		}
 		
 		
-
-		// for (int i = 0; i < numTrees; i++){
-		// 	System.out.print(i + ": ");
-		// 	pop.get(i).printStats();
-		// }
-		//GPTree t1 = pop.get(0);
-		// GPTree t2 = pop.get(1);
-
-		// System.out.println("t1: ");
-		// t1.printTree();
-		// int fit = calc_fit(t1);
-		// System.out.println("fitness: " + fit);
-		// System.out.println("\n\nt2: ");
-		// t2.printTree();
-
-		// single_crossover(t1, t2);
-
-		// System.out.println("\n\n\nnew t1: ");
-		// t1.printTree();
-		// System.out.println("\n\nnew t2: ");
-		// t2.printTree();
+		for (int i = 0; i < pop.size(); i++){
+			System.out.println("\nTree no: " + i + "\nfitness:" + pop.get(i).fitness);
+			pop.get(i).printTree();
+		}
 		
+//		JOptionPane.showMessageDialog(null, "List contained 0 elements!", "Error",
+//                JOptionPane.ERROR_MESSAGE);
 		
-		
-//		single_gen();
 
-		
-		
-		//System.out.println("\n\nt0 after:");
-		//pop.get(0).printTree();
 	}
-
-	public void run(){
-		for(int i = 0; i < NUM_GEN; i++){
-			single_gen();
+	
+	
+	public void run(int numGens, int numRuns){
+		for(int i = 0; i < numGens; i++){
+			System.out.println("\n\n\n######################\n##GENERATION NO.: " + (i+1) + " ##\n######################\n");
+			single_gen(numRuns);
 		}
 	}
 
@@ -76,30 +59,32 @@ public class Population{
 	* Input: void
 	* Output: void
 	*/
-	public void single_gen(){
+	public void single_gen(int numRuns){
 		ArrayList<GPTree> new_kids = new ArrayList<GPTree>();
 		int N = pop.size();
-		GPTree child1, child2, parent1, parent2;
 		int rand;
-		System.out.println("t0 before:");
-		pop.get(0).printTree();
 		while (new_kids.size() != N){
-			parent1 = tournament_selection();
-			child1 = new GPTree(parent1);
-			parent2 = tournament_selection();
-			child2 = new GPTree(parent2);
+			GPTree parent1 = tournament_selection();
+			GPTree child1 = new GPTree(parent1);
+			GPTree parent2 = tournament_selection();
+			GPTree child2 = new GPTree(parent2);
 
 			rand = GPNode.randomVal(0,100);
 			if(rand <= pc){ single_crossover(child1, child2); }
 			if(rand <= pm){ mutate(child1, child2); }
 
-			child1.fitness = calc_fit(child1);
-			child2.fitness = calc_fit(child2);
+			child1.fitness = calc_fit(child1, numRuns);
+			child2.fitness = calc_fit(child2, numRuns);
 			
 			new_kids.add(child1);
 			new_kids.add(child2);
 		}
 		pop = new_kids;
+		
+		for (int i = 0; i < pop.size(); i++){
+			System.out.println("\nTree no: " + i + "\nfitness:" + pop.get(i).fitness);
+			pop.get(i).printTree();
+		}
 	}
 
 
@@ -118,10 +103,10 @@ public class Population{
 //		return num_add;
 //	}
 
-	public double calc_fit(GPTree tree) {
-		
+	public double calc_fit(GPTree tree, int numRuns) {
 		PSO pso = new PSO(tree);
-		return pso.evalGPTree();
+		double steve = pso.evalGPTree(numRuns);
+		return steve;
 		
 	}
 

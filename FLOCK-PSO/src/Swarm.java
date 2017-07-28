@@ -56,14 +56,36 @@ public class Swarm {
 		// array needed to get back function evaluation results from Particle constructor
 		double[] initParticleData = new double[2];    
 
+		
+		
 		// create the particles
+		
+		//
+		//
+		//
+		// SOPHIE EDITS HERE
+		//
+		//
+		//
+		double[] rand_vars = determineVariables();
+		
 
-//		particles[0] = new Particle(functionNum, numDimensions, 0, 
-//				currentMaxSpeed, currentNormalSpeed, currentNeighRadius, currentSeparationWeight,
-//				currentCohesionWeight, currentAlignmentWeight, currentPacekeepingWeight, currentRandMotionProb,
-//				initParticleData);
+		particles[0] = new Particle(functionNum, numDimensions, 0, 
+				rand_vars[0], rand_vars[1], rand_vars[2], rand_vars[3],
+				rand_vars[4], rand_vars[5], rand_vars[6], rand_vars[7],
+				initParticleData);
 
-		particles[0] = new Particle(functionNum, numDimensions, 0, initParticleData);
+//		particles[0] = new Particle(functionNum, numDimensions, 0, initParticleData);
+		
+		
+		//
+		//
+		//
+		// SOPHIE END EDITS HERE
+		//
+		//
+		//
+		
 		
 		// first one is the current global best
 		int globalBestParticleNum = 0;
@@ -76,12 +98,12 @@ public class Swarm {
 
 		for (int particleID = 1 ; particleID < particles.length ; particleID++) {
 
-//			particles[particleID] = new Particle(functionNum, numDimensions, particleID, 
-//					currentMaxSpeed, currentNormalSpeed, currentNeighRadius, currentSeparationWeight,
-//					currentCohesionWeight, currentAlignmentWeight, currentPacekeepingWeight, currentRandMotionProb,
-//					initParticleData);
+			particles[particleID] = new Particle(functionNum, numDimensions, particleID, 
+					rand_vars[0], rand_vars[1], rand_vars[2], rand_vars[3],
+					rand_vars[4], rand_vars[5], rand_vars[6], rand_vars[7],
+					initParticleData);
 		
-			particles[particleID] = new Particle(functionNum, numDimensions, particleID, initParticleData);
+//			particles[particleID] = new Particle(functionNum, numDimensions, particleID, initParticleData);
 			
 			// evaluate
 			double particleValue = initParticleData[TestFunctions.VAL_INDEX];
@@ -472,6 +494,28 @@ public class Swarm {
 			System.out.println("particle " + p + " = " + particles[p]);
 		}
 
+	}
+	
+	public double[] determineVariables(){
+		double maxSpeed = GPNode.randomVal(2.0, 10.0);         		// range = [2.0, 10.0]
+		double normalSpeed = GPNode.randomVal(1.0, maxSpeed);  		// range = [1.0, maxSpeed]
+		double neighborRadius = GPNode.randomVal(10.0, 100.0); 		// range = [10.0, 100.0]
+		double separationWeight = GPNode.randomVal(0.0, 100.0);		// range = [0.0, 100.0]
+		double alignmentWeight = GPNode.randomVal(0.0, 1.0);   		// range = [0.0, 1.0]
+		double cohesionWeight = GPNode.randomVal(0.0, 1.0);    		// range = [0.0, 1.0]
+		double pacekeepingWeight = GPNode.randomVal(0.0, 1.0);		// range = [0.0, 1.0]
+		double randomMotionProbability = GPNode.randomVal(0.0, 5.0);// range = [0.0, 0.5]
+		
+		double[] new_var = {maxSpeed, 
+			 normalSpeed,
+			 neighborRadius, 
+			 separationWeight,
+			 cohesionWeight, 
+			 alignmentWeight,
+			 pacekeepingWeight, 
+			 randomMotionProbability};
+		
+		return new_var;
 	}
 
 

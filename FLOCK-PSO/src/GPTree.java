@@ -28,6 +28,9 @@ public class GPTree {
 	
 	//needed for breeding
 	public double fitness;
+	
+	//for printing trees
+	Particle p;
 
 	
 	public GPTree(double min_const, double max_const, double max_depth, int max_seq){
@@ -142,6 +145,7 @@ public class GPTree {
 	public void run(Particle particle) {
 		ReturnValue retVal = new ReturnValue();
 		root.run(retVal, particle);
+		p = particle;
 	}
 	
 	public static GPNode generateSubtree(double depth, GPNode parent, GPNode.ReturnType rt){
@@ -399,7 +403,7 @@ public class GPTree {
 			System.out.println("Type: " + cur_node.nodeType);
 			if(cur_node.nodeType == GPNode.NodeType.VAR){
 				System.out.println("Variable: " + cur_node.varName);
-				// System.out.println("Variable value: " + Particle.getVarValue(cur_node.varName) );
+//				System.out.println("Variable value: " + p.getVarValue(cur_node.varName) );
 			}
 			if(cur_node.nodeType == GPNode.NodeType.CONST){
 				System.out.println("Constant Value: " + cur_node.constValue );

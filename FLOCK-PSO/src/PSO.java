@@ -188,7 +188,7 @@ public class PSO {
 	}
 	
 
-	public double evalGPTree() {
+	public double evalGPTree(int numRuns) {
 		
 		try {
 
@@ -220,7 +220,7 @@ public class PSO {
 
 
 			// how many runs?
-			totalNumRuns = 10;  
+			totalNumRuns = numRuns;  
 
 
 			// FUNCTION
@@ -1149,7 +1149,7 @@ public class PSO {
 
 			// outputWindow is System.out
 			outputWindow.println("\n\nDONE");	
-			outputWindow.close();
+//			outputWindow.close();
 
 
 		}  // try

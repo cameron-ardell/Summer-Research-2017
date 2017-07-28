@@ -1,0 +1,11 @@
+
+public class TestGPPSO {
+
+	public static void main(String[] args) {
+		int numTrees = 5;
+		int numRuns = 20;
+		Population pop = new Population(numTrees, numRuns);
+		
+	}
+
+}

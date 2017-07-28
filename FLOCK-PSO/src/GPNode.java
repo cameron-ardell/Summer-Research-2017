@@ -46,7 +46,7 @@ public class GPNode {
 								NodeType.MULT, NodeType.DIV, NodeType.EXP,
 								NodeType.IF, NodeType.ASSIGN, NodeType.INC, NodeType.DEC
 							};
-	public static NodeType[] sequenceReturn = {NodeType.IF, NodeType.ASSIGN, NodeType.INC, NodeType.DEC};
+	public static NodeType[] sequenceReturn = {NodeType.IF, NodeType.ASSIGN }; // NodeType.INC, NodeType.DEC
 	public static NodeType[] terminalBool =  {NodeType.LT, NodeType.GT, NodeType.LEQ, NodeType.GEQ, NodeType.EQ};
 	public static NodeType[] terminaldouble = {NodeType.VAR, NodeType.CONST};
 	public static NodeType[] terminalAll = {NodeType.ASSIGN, NodeType.INC, NodeType.DEC};
@@ -333,7 +333,7 @@ public class GPNode {
 		return newVal;
 	}
 	public static double randomVal(double min, double max) {
-		double newVal = (double)rand.nextInt(((int)max - (int)min) ) + min;
+		double newVal = min + (max-min)* rand.nextDouble();
 		return newVal;
 	}
 

@@ -37,7 +37,7 @@ public class Particle {
 	private static final int FLOCK_BOUDARY_SENSING_THRESHOLD = 5;
 
 	// flock parameters
-	private double maxSpeed;                // speed limit
+	private double maxSpeed;              // speed limit
 	private double normalSpeed;             // when pacekeeping (see below) used, tries to keep particle to this speed
 	private double neighborRadius;          // determines which other particles are neighbors of a given particle    
 	private double separationWeight;        // how strongly do particles move away from every neighbor: range = [0.0, 100.0]
@@ -54,23 +54,23 @@ public class Particle {
 	private DoubleVector currFlockVelocity;
 
 
-//	public Particle(int functionNum, 
-//			int numDimensions, 
-//			int particleID, 
-//			double maxSpeed, 
-//			double normalSpeed,
-//			double neighborRadius, 
-//			double separationWeight,
-//			double cohesionWeight, 
-//			double alignmentWeight,
-//			double pacekeepingWeight, 
-//			double randomMotionProb,
-//			double[] sendBackResults) {
-
 	public Particle(int functionNum, 
 			int numDimensions, 
 			int particleID, 
+			double maxSpeed, 
+			double normalSpeed,
+			double neighborRadius, 
+			double separationWeight,
+			double cohesionWeight, 
+			double alignmentWeight,
+			double pacekeepingWeight, 
+			double randomMotionProb,
 			double[] sendBackResults) {
+
+//	public Particle(int functionNum, 
+//			int numDimensions, 
+//			int particleID, 
+//			double[] sendBackResults) {
 		
 		this.particleID = particleID;
 
@@ -110,21 +110,23 @@ public class Particle {
 
 		nextNeighIndex = 0;
 
-//		// flock parameters
-//		this.maxSpeed = maxSpeed;
-//		this.normalSpeed = normalSpeed;
-//		this.neighborRadius = neighborRadius;
-//		this.separationWeight = separationWeight;
-//		this.cohesionWeight = cohesionWeight;
-//		this.alignmentWeight = alignmentWeight;
-//		this.pacekeepingWeight = pacekeepingWeight;
-//		this.randomMotionProb = randomMotionProb;
+		// flock parameters
+		this.maxSpeed = maxSpeed;
+		this.normalSpeed = normalSpeed;
+		this.neighborRadius = neighborRadius;
+		this.separationWeight = separationWeight;
+		this.cohesionWeight = cohesionWeight;
+		this.alignmentWeight = alignmentWeight;
+		this.pacekeepingWeight = pacekeepingWeight;
+		this.randomMotionProb = randomMotionProb;
 
 		// random location in flock space
 		currFlockLocation = DoubleVector.randomVector(FLOCK_SPACE_NUM_DIM, FLOCK_SPACE_DIM_LENGTH/2);
 
 		// start with small random velocity in flock space
 		currFlockVelocity = DoubleVector.randomVector(FLOCK_SPACE_NUM_DIM, FLOCK_INIT_VELOCITY_DIMENSION_MAGNITUDE);
+		
+//		printFlockParameters();
 
 	}
 
@@ -386,9 +388,10 @@ public class Particle {
 		if (!PSO.usingSPSO) {
 			Swarm.gpTree.run(this);
 			if (particleID == 0) {
-				//System.out.println("\nnumNeighborsOwnFlock = " + numNeighborsOwnFlock);
-				printFlockParameters();
-				Swarm.gpTree.printTree();
+//				System.out.println("HERE");
+//				printFlockParameters();
+//				System.out.println();
+//				Swarm.gpTree.printTree();
 			}
 		}
 
@@ -399,14 +402,16 @@ public class Particle {
 
 	public void printFlockParameters() {
 		
-		System.out.printf("NS = %5.3f  NR = %5.3f  SEP = %5.3f  COH = %5.3f  ALI = %5.3f  PACE = %5.3f  RAND = %5.3f \n",
+		System.out.printf("NS = %5.3f  NR = %5.3f  SEP = %5.3f  COH = %5.3f  ALI = %5.3f  PACE = %5.3f  RAND = %5.3f NNOWN = %5.3f NNALL = %5.3f \n",
 				normalSpeed,
 				neighborRadius, 
 				separationWeight,
 				cohesionWeight, 
 				alignmentWeight,
 				pacekeepingWeight, 
-				randomMotionProb);
+				randomMotionProb,
+				numNeighborsOwnFlock,
+				numNeighborsAllFlocks);
 		
 	}
 
@@ -467,65 +472,71 @@ public class Particle {
 	// called by a ProgramNode when it needs to assign a value to variable in the Particle object
 	public void assignVariable(String varName, double value) {
 
-		System.out.println("Assigning a variable");
 //		System.out.println(varName);
 
 		
+		
 		if (varName.equals("maxSpeed")) {
-			System.out.println("maxSpeed = " + value);
+//			if (particleID == 0) System.out.println("maxSpeed = " + value);
 			maxSpeed = value;
 		}
 
 		else if (varName.equals("normalSpeed")) {
-			System.out.println("normalSpeed = " + value);
+//			if (particleID == 0) System.out.println("normalSpeed = " + value);
 			normalSpeed = value;
 		}
 
 		else if (varName.equals("neighborRadius")) {
-			System.out.println("neighborRadius = " + value);
+//			if (particleID == 0) System.out.println("neighborRadius = " + value);
 			neighborRadius = value;
 		}
 
 		else if (varName.equals("separationWeight")) {
-			System.out.println("separationWeight = " + value);
+//			if (particleID == 0) System.out.println("separationWeight = " + value);
 			separationWeight = value;
 		}
 
 		else if (varName.equals("alignmentWeight")) {
-			System.out.println("alignmentWeight = " + value);
+//			if (particleID == 0) System.out.println("alignmentWeight = " + value);
 			alignmentWeight = value;
 		}
 
 		else if (varName.equals("cohesionWeight")) {
-			System.out.println("cohesionWeight = " + value);
+//			if (particleID == 0) System.out.println("cohesionWeight = " + value);
 			cohesionWeight = value;
 		}
 
 		else if (varName.equals("pacekeepingWeight")) {
-			System.out.println("pacekeepingWeight = " + value);
+//			if (particleID == 0) System.out.println("pacekeepingWeight = " + value);
 			pacekeepingWeight = value;
 		}
 
 		else if (varName.equals("randomMotionProbability")) {
-			System.out.println("randomMotionProbability = " + value);
+//			if (particleID == 0) System.out.println("randomMotionProbability = " + value);
 			randomMotionProb = value;
 		}
 
 		else if (varName.equals("numNeighborsOwnFlock")) {
-			System.out.println("numNeighborsOwnFlock = " + value);
+//			if (particleID == 0) System.out.println("numNeighborsOwnFlock = " + value);
 			numNeighborsOwnFlock = value;
 		}
 
 		else if (varName.equals("numNeighborsAllFlocks")) {
-			System.out.println("numNeighborsAllFlocks = " + value);
+//			if (particleID == 0) System.out.println("numNeighborsAllFlocks = " + value);
 			numNeighborsAllFlocks = value;
 		}
 
 		else {
-			System.out.println("error: unknown variable name in Particle.assignVariable: \"" + varName + "\"");
+			if (particleID == 0) System.out.println("error: unknown variable name in Particle.assignVariable: \"" + varName + "\"");
 			System.exit(0);
 		}
 
+//		if (particleID == 0) {
+//			//System.out.println("\nnumNeighborsOwnFlock = " + numNeighborsOwnFlock);
+//			printFlockParameters();
+//			System.out.println();
+////			Swarm.gpTree.printTree();
+//		}
 
 	}
 
