@@ -49,42 +49,43 @@ public class Population{
 	
 	
 	public void run(int numGens, int numRuns){
-//		PrintStream out = System.out;
-//        PrintStream std = System.out;
-//        try {
-//            FileOutputStream pw = new FileOutputStream("testing0801.csv", true);
-//            out = new PrintStream(pw);
-//            System.setOut(out);
-//                
-//        }
-//        catch(FileNotFoundException ex){
-//            System.out.println(ex.getMessage());
-//        }
-//        System.out.printf("Number of generations: " + numGens + "\n");
-//        System.out.printf("Number of runs:" + numRuns + "\n");
-//        System.out.printf("Number of trees: " + pop.size() + "\n");
-//        System.out.printf("Maximum depth: " + max_depth + "\n\n\n");
-//        
-//		
-//		System.out.printf("Generation: \n ");
+		PrintStream out = System.out;
+        PrintStream std = System.out;
+        try {
+            FileOutputStream pw = new FileOutputStream("testing0802.csv", true);
+            out = new PrintStream(pw);
+            System.setOut(out);
+                
+        }
+        catch(FileNotFoundException ex){
+            System.out.println(ex.getMessage());
+        }
+        System.out.printf("Generations: , " + numGens + "\n");
+        System.out.printf("Runs: , " + numRuns + "\n");
+        System.out.printf("Trees: , " + pop.size() + "\n");
+        System.out.printf("Maximum depth: , " + max_depth + "\n");
+        System.out.printf("Maximum sequence , " + max_seq + "\n");
+        
+		
+		System.out.printf("Generation: \n ");
 		for(int i = 0; i < numGens; i++){
 //			System.out.println("\n\n\n#######################\n## GENERATION NO.: " + (i) + " ##\n#######################\n");
 			
-			//System.out.printf(i + " , ");
+			System.out.printf(i + " , ");
 			for (int j = 0; j < pop.size(); j++){
-//				System.out.printf(pop.get(j).fitness + ", ");
-				System.out.print(pop.get(j).fitness + ", ");
+				System.out.printf(pop.get(j).fitness + ", ");
+//				System.out.print(pop.get(j).fitness + ", ");
 			}
-//			System.out.printf("\n");
-			System.out.println();			
+			System.out.printf("\n");
+//			System.out.println();			
 
 			single_gen(numRuns);
 		}
 //		System.out.println("\n\n\n#######################\n## GENERATION NO.: " + numGens + " ##\n#######################\n");
-//		System.out.printf(numGens + "\n");
+		System.out.printf(numGens + "\n");
 		for (int j = 0; j < pop.size(); j++){
-//			System.out.printf(pop.get(j).fitness + ", ");
-			System.out.print(pop.get(j).fitness + ", ");
+			System.out.printf(pop.get(j).fitness + ", ");
+//			System.out.print(pop.get(j).fitness + ", ");
 		}
 	}
 
