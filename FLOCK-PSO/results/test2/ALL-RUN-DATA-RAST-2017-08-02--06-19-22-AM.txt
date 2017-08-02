@@ -1,0 +1,108 @@
+2017-08-02--06-19-22-AM
+
+
+
+
+# STANDARD PSO
+# --------------------------------------------------------------------------------------------
+# RASTRIGIN_FUNCTION, location of optimum shifted randomly for each run 
+#    GB-yesSELF-nBEST
+# 30 dimensions
+# 30 particles
+# 10000 iterations
+# overall theta = 4.1, constriction = 0.7298437881283576
+# random number generator seed = no seed
+# 10 runs
+# 
+
+GLOBAL BEST FUNCTION VALUES
+113.42494364007638
+84.57128761228819
+76.61169104203947
+70.64193669947969
+122.37938220583118
+55.71761138778555
+133.32371365123896
+51.737785235050524
+80.59146145955316
+51.737785235050524
+
+GLOBAL BEST DISTANCE FROM OPTIMUM
+10.623178242545118
+9.173014919040483
+8.730690929227055
+8.383633338734443
+11.034519870954306
+7.445563031741319
+11.517340242292992
+7.174724959740021
+8.954578276112487
+7.174724962458012
+
+
+Average function value over runs =  8.4074e+01 
+Standard deviation over runs     =  2.9624e+01 
+Minimum function value over runs =  5.1738e+01 
+Median function value over runs  =  7.8602e+01 
+Maximum function value over runs =  1.3332e+02 
+
+Function value success criterion =  50.000000    
+Success rate over runs =    0.00% 
+Average distance to optimum =  9.0212e+00    
+
+Time per run: 0.7038 seconds
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+# FLOCK PSO
+# --------------------------------------------------------------------------------------------
+# RASTRIGIN_FUNCTION, location of optimum shifted randomly for each run 
+# FL-yesSELF-nBEST
+# 30 dimensions
+# 30 particles
+# 10000 iterations
+# overall theta = 4.1, constriction = 0.7298437881283576
+# random number generator seed = no seed
+# 10 runs
+# 
+
+GLOBAL BEST FUNCTION VALUES
+79.59655813768116
+40.79328607609138
+93.5258888537752
+63.677253572179254
+74.62159509322527
+51.73778019723145
+51.737800393945896
+61.687345533630825
+54.722677565225766
+71.63690079439209
+
+GLOBAL BEST DISTANCE FROM OPTIMUM
+8.899143331404865
+6.370832742469193
+9.646427647743375
+7.959637542074824
+8.616517124496463
+7.174723568159513
+7.17472917366865
+7.834282645524301
+7.378791690757888
+8.44246828679294
+
+
+Average function value over runs =  6.4374e+01 
+Standard deviation over runs     =  1.5690e+01 
+Minimum function value over runs =  4.0793e+01 
+Median function value over runs  =  6.2682e+01 
+Maximum function value over runs =  9.3526e+01 
+
+Function value success criterion =  50.000000    
+Success rate over runs =   10.00% 
+Average distance to optimum =  7.9498e+00    
+
+Time per run: 1.3364 seconds
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------
+

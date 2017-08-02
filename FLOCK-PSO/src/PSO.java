@@ -203,7 +203,7 @@ public class PSO {
 			String dateString = dateformatter.format(date.getTime());
 
 			// to output window
-			outputWindow.println("RUNNING CODE ON " + dateString + "\n");	
+//			outputWindow.println("RUNNING CODE ON " + dateString + "\n");	
 
 
 			// this has never been used!!
@@ -878,7 +878,7 @@ public class PSO {
 																			// theta parameters (and possibly others) will have been reset to s-pso values,
 																			// so show the type of test only on the DEBUG_RUN_NUM 
 																			if (regularDebug && currentRunNum == DEBUG_RUN_NUM) {
-																				outputTypeOfTest(outputWindow);	
+//																				outputTypeOfTest(outputWindow);	
 																			}
 
 
@@ -1022,7 +1022,7 @@ public class PSO {
 
 
 																		// SUMMARY DATA OUTPUT TO OUTPUT WINDOW
-																		outputTypeOfTest(outputWindow);	
+//																		outputTypeOfTest(outputWindow);	
 
 //																		outputTestParameters(outputWindow, currentPSOTopology, currentPSOSelfModel, currentPSOInfluenceModel, 
 //																				currentMaxSpeed, currentNormalSpeed, currentNeighRadius, currentSeparationWeight,
@@ -1030,12 +1030,12 @@ public class PSO {
 //																				functionNum, currentNumDimensions, currentNumParticles, 
 //																				totalNumRuns, totalNumFEs, totalNumIters); 		
 																		
-																		outputTestParameters(outputWindow, currentPSOTopology, currentPSOSelfModel, currentPSOInfluenceModel, 
-																				functionNum, currentNumDimensions, currentNumParticles, 
-																				totalNumRuns, totalNumFEs, totalNumIters); 
-
-																		outputSummaryData(outputWindow, intervalSummaryData, secondsPerRun, successRate, 
-																				averageDistanceToOptimum, functionNum);								
+//																		outputTestParameters(outputWindow, currentPSOTopology, currentPSOSelfModel, currentPSOInfluenceModel, 
+//																				functionNum, currentNumDimensions, currentNumParticles, 
+//																				totalNumRuns, totalNumFEs, totalNumIters); 
+//
+//																		outputSummaryData(outputWindow, intervalSummaryData, secondsPerRun, successRate, 
+//																				averageDistanceToOptimum, functionNum);								
 
 																		//																		// average bounding box volume
 																		//																		double averageCumBoundingBoxVolume = sumCumBoundingBoxVolumes / totalNumRuns;
@@ -1148,7 +1148,7 @@ public class PSO {
 
 
 			// outputWindow is System.out
-			outputWindow.println("\n\nDONE");	
+//			outputWindow.println("\n\nDONE");	
 //			outputWindow.close();
 
 

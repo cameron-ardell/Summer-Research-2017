@@ -473,6 +473,9 @@ public class Particle {
 	public void assignVariable(String varName, double value) {
 
 //		System.out.println(varName);
+		if(varName == null){
+			System.out.println("################################### tried to assign something that wasn't a variable");
+		}
 
 		
 		
@@ -543,6 +546,10 @@ public class Particle {
 	// called by a ProgramNode when it needs to increment a variable in the Particle object
 	public void increment(String varName) {
 
+		if(varName == null){
+			System.out.println("################################### tried to assign something that wasn't a variable");
+		}
+		
 		if (varName.equals("maxSpeed")) {
 			++maxSpeed;
 		}
@@ -594,6 +601,10 @@ public class Particle {
 	// called by a ProgramNode when it needs to decrement a variable in the Particle object
 	public void decrement(String varName) {
 
+		if(varName == null){
+			System.out.println("################################### tried to assign something that wasn't a variable");
+		}
+		
 		if (varName.equals("maxSpeed")) {
 			--maxSpeed;
 		}

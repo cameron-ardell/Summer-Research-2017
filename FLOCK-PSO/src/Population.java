@@ -1,9 +1,12 @@
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.PrintStream;
 import java.util.ArrayList;
 
 public class Population{
 	public static ArrayList<GPTree> pop; //actual population of trees
-	int pm = 100; 	// percent probability of mutation
-	int pc = 100; 	// percent probability of crossover
+	int pm = 30; 	// percent probability of mutation
+	int pc = 70; 	// percent probability of crossover
 	double k_as_frac_of_N = 0.2; 	// portion of population to use in tournament selection
 	int TRIES_MAX = 37; 	//max number of times to try to find compatible nodes for crossover
 
@@ -12,7 +15,7 @@ public class Population{
 	double min_const = 0;
 	double max_const = 1000;
 	double max_depth = 3;
-	int max_seq = 3;
+	int max_seq = 8;
 
 	
 	public Population(int numGens, int numTrees, int numRuns){
@@ -33,10 +36,10 @@ public class Population{
 		}
 		
 		
-		for (int i = 0; i < pop.size(); i++){
-			System.out.println("\nTree no: " + i + "\nfitness:" + pop.get(i).fitness);
-			pop.get(i).printTree();
-		}
+		//for (int i = 0; i < pop.size(); i++){
+			//System.out.println("\nTree no: " + i + "\nfitness:" + pop.get(i).fitness);
+			//pop.get(i).printTree();
+		//}
 		
 //		JOptionPane.showMessageDialog(null, "List contained 0 elements!", "Error",
 //                JOptionPane.ERROR_MESSAGE);
@@ -46,9 +49,42 @@ public class Population{
 	
 	
 	public void run(int numGens, int numRuns){
+//		PrintStream out = System.out;
+//        PrintStream std = System.out;
+//        try {
+//            FileOutputStream pw = new FileOutputStream("testing0801.csv", true);
+//            out = new PrintStream(pw);
+//            System.setOut(out);
+//                
+//        }
+//        catch(FileNotFoundException ex){
+//            System.out.println(ex.getMessage());
+//        }
+//        System.out.printf("Number of generations: " + numGens + "\n");
+//        System.out.printf("Number of runs:" + numRuns + "\n");
+//        System.out.printf("Number of trees: " + pop.size() + "\n");
+//        System.out.printf("Maximum depth: " + max_depth + "\n\n\n");
+//        
+//		
+//		System.out.printf("Generation: \n ");
 		for(int i = 0; i < numGens; i++){
-			System.out.println("\n\n\n######################\n##GENERATION NO.: " + (i+1) + " ##\n######################\n");
+//			System.out.println("\n\n\n#######################\n## GENERATION NO.: " + (i) + " ##\n#######################\n");
+			
+			//System.out.printf(i + " , ");
+			for (int j = 0; j < pop.size(); j++){
+//				System.out.printf(pop.get(j).fitness + ", ");
+				System.out.print(pop.get(j).fitness + ", ");
+			}
+//			System.out.printf("\n");
+			System.out.println();			
+
 			single_gen(numRuns);
+		}
+//		System.out.println("\n\n\n#######################\n## GENERATION NO.: " + numGens + " ##\n#######################\n");
+//		System.out.printf(numGens + "\n");
+		for (int j = 0; j < pop.size(); j++){
+//			System.out.printf(pop.get(j).fitness + ", ");
+			System.out.print(pop.get(j).fitness + ", ");
 		}
 	}
 
@@ -81,10 +117,10 @@ public class Population{
 		}
 		pop = new_kids;
 		
-		for (int i = 0; i < pop.size(); i++){
-			System.out.println("\nTree no: " + i + "\nfitness:" + pop.get(i).fitness);
-			pop.get(i).printTree();
-		}
+//		for (int i = 0; i < pop.size(); i++){
+//			System.out.println("\nTree no: " + i + "\nfitness:" + pop.get(i).fitness);
+//			pop.get(i).printTree();
+//		}
 	}
 
 
@@ -256,13 +292,16 @@ public class Population{
 			index = GPNode.randomVal(1, numnodes1);
 			node1 = nodes1.get(index);
 			GPNode.ReturnType retType = node1.rt;
-					
+			GPNode.NodeType nodeType = node1.nodeType;		
 
 			//adding the relevant nodes, just not root
-			//nodes are ordered most->least depth
-			for(int i = 1; i < numnodes2; i++){
-				if(nodes2.get(i).rt == retType){
-					applicable_node_indexes.add(0, i);
+			if(nodeType != GPNode.NodeType.VAR && nodeType != GPNode.NodeType.CONST){
+				//nodes are ordered most->least depth
+				for(int i = 1; i < numnodes2; i++){
+					if(nodes2.get(i).rt == retType && nodes2.get(i).nodeType != GPNode.NodeType.CONST
+												   && nodes2.get(i).nodeType != GPNode.NodeType.VAR){
+						applicable_node_indexes.add(0, i);
+					}
 				}
 			}
 

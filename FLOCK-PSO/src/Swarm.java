@@ -506,7 +506,8 @@ public class Swarm {
 		double pacekeepingWeight = GPNode.randomVal(0.0, 1.0);		// range = [0.0, 1.0]
 		double randomMotionProbability = GPNode.randomVal(0.0, 5.0);// range = [0.0, 0.5]
 		
-		double[] new_var = {maxSpeed, 
+		double[] new_var =
+			 {maxSpeed, 
 			 normalSpeed,
 			 neighborRadius, 
 			 separationWeight,
