@@ -5,17 +5,17 @@ import java.util.ArrayList;
 
 public class Population{
 	public static ArrayList<GPTree> pop; //actual population of trees
-	int pm = 30; 	// percent probability of mutation
+	int pm = 5; 	// percent probability of mutation
 	int pc = 70; 	// percent probability of crossover
-	double k_as_frac_of_N = 0.2; 	// portion of population to use in tournament selection
+	double k_as_frac_of_N = 0.1; 	// portion of population to use in tournament selection
 	int TRIES_MAX = 37; 	//max number of times to try to find compatible nodes for crossover
 
 
 	// for creating a tree. adjustable for user
 	double min_const = 0;
 	double max_const = 1000;
-	double max_depth = 3;
-	int max_seq = 8;
+	double max_depth = 5;
+	int max_seq = 6;
 
 	
 	public Population(int numGens, int numTrees, int numRuns){
@@ -52,7 +52,7 @@ public class Population{
 		PrintStream out = System.out;
         PrintStream std = System.out;
         try {
-            FileOutputStream pw = new FileOutputStream("testing0802.csv", true);
+            FileOutputStream pw = new FileOutputStream("d_5_t_20.csv", true);
             out = new PrintStream(pw);
             System.setOut(out);
                 
@@ -65,9 +65,11 @@ public class Population{
         System.out.printf("Trees: , " + pop.size() + "\n");
         System.out.printf("Maximum depth: , " + max_depth + "\n");
         System.out.printf("Maximum sequence , " + max_seq + "\n");
+        System.out.printf("prob. crossover: ,  "+ pc + "\n");
+        System.out.printf("prob. mutation: ,  "+ pm + "\n\n");
         
 		
-		System.out.printf("Generation: \n ");
+		System.out.printf("\nGeneration: \n ");
 		for(int i = 0; i < numGens; i++){
 //			System.out.println("\n\n\n#######################\n## GENERATION NO.: " + (i) + " ##\n#######################\n");
 			
@@ -82,7 +84,7 @@ public class Population{
 			single_gen(numRuns);
 		}
 //		System.out.println("\n\n\n#######################\n## GENERATION NO.: " + numGens + " ##\n#######################\n");
-		System.out.printf(numGens + "\n");
+		System.out.printf(numGens + " , ");
 		for (int j = 0; j < pop.size(); j++){
 			System.out.printf(pop.get(j).fitness + ", ");
 //			System.out.print(pop.get(j).fitness + ", ");
@@ -143,7 +145,13 @@ public class Population{
 	public double calc_fit(GPTree tree, int numRuns) {
 		PSO pso = new PSO(tree);
 		double steve = pso.evalGPTree(numRuns);
-		return steve;
+		double majercik;
+		if (steve > 0){
+			majercik = 2 - steve;
+		} else {
+			majercik = -1.0 * steve;
+		}
+		return majercik;
 		
 	}
 
@@ -251,6 +259,9 @@ public class Population{
 		double numTreesExact = k_as_frac_of_N * (double)n;
 		int k = (int)Math.round( numTreesExact );
 //		System.out.println("Given n = " + n + " trees, want " + k_as_frac_of_N + " of them, looking at: " + k + " trees.");
+		
+		k = 2;
+		
 		
 		GPTree cur;
 		for(int i = 0; i < k; i++){
