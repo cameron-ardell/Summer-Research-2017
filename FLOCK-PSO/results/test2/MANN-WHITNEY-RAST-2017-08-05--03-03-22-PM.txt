@@ -1,0 +1,132 @@
+2017-08-05--03-03-22-PM
+
+
+=====================================================
+FUNCTION: RASTRIGIN_FUNCTION
+=====================================================
+
+
+
+-----------------------------------------------------
+FUNCTION VALUE MANN WHITNEY TESTS
+-----------------------------------------------------
+
+
+FUNCTION VALUE FOR RASTRIGIN_FUNCTION
+------------------------------------------------------------------
+  Case 1: # STANDARD PSO
+             #    GB-yesSELF-nBEST -- 30 particles -- 10000 iterations
+  Case 2: # FLOCK PSO
+             # 50 runs -- erage function value over runs =  6.7757e+01  -- andard deviation over runs     =  2.3543e+01 
+             # --------------------------------------------------------------------------------------------
+             # RASTRIGIN_FUNCTION, location of optimum shifted randomly for each run 
+             # FL-yesSELF-nBEST
+             # 30 dimensions
+             # 30 particles
+             # 10000 iterations
+
+Case 1:
+     mean rank (jsc) = 51.5
+Case 2:
+     mean rank (jsc) = 49.5
+
+p (apache) = 0.7303266896009318
+u (apache) = 1300.0
+
+p (jsc) = 0.7329190679970561
+u (jsc) = 1200.0
+z (jsc) = -0.3412451076743698
+
+
+
+
+
+-----------------------------------------------------
+DISTANCE FROM GLOBAL OPTIMUM MANN WHITNEY TESTS
+-----------------------------------------------------
+
+
+DISTANCE FROM GLOBAL OPTIMUM FOR RASTRIGIN_FUNCTION
+------------------------------------------------------------------
+  Case 1: # STANDARD PSO
+             #    GB-yesSELF-nBEST -- 30 particles -- 10000 iterations
+  Case 2: # FLOCK PSO
+             # 50 runs -- erage function value over runs =  6.7757e+01  -- andard deviation over runs     =  2.3543e+01 
+             # --------------------------------------------------------------------------------------------
+             # RASTRIGIN_FUNCTION, location of optimum shifted randomly for each run 
+             # FL-yesSELF-nBEST
+             # 30 dimensions
+             # 30 particles
+             # 10000 iterations
+
+Case 1:
+     mean rank (jsc) = 51.52
+Case 2:
+     mean rank (jsc) = 49.48
+
+p (apache) = 0.7251496559023519
+u (apache) = 1301.0
+
+p (jsc) = 0.7277366196456705
+u (jsc) = 1199.0
+z (jsc) = -0.3481379037105842
+
+
+
+
+
+-----------------------------------------------------
+CASE INFORMATION
+-----------------------------------------------------
+
+
+# STANDARD PSO
+-------------------------------------------------------------
+# RASTRIGIN_FUNCTION, location of optimum shifted randomly for each run 
+#    GB-yesSELF-nBEST
+# 30 dimensions
+# 30 particles
+# 10000 iterations
+# overall theta = 4.1, constriction = 0.7298437881283576
+# random number generator seed = no seed
+# 50 runs
+# 
+Average function value over runs =  7.1119e+01 
+Standard deviation over runs     =  2.6124e+01 
+Minimum function value over runs =  3.2834e+01 
+Median function value over runs  =  6.5667e+01 
+Maximum function value over runs =  1.4825e+02 
+
+Function value success criterion =  50.000000    
+Success rate over runs =   22.00% 
+Average distance to optimum =  8.2861e+00    
+
+Time per run: 0.69962 seconds
+-------------------------------------------------------------
+
+
+# FLOCK PSO
+-------------------------------------------------------------
+# RASTRIGIN_FUNCTION, location of optimum shifted randomly for each run 
+# FL-yesSELF-nBEST
+# 30 dimensions
+# 30 particles
+# 10000 iterations
+# overall theta = 4.1, constriction = 0.7298437881283576
+# random number generator seed = no seed
+# 50 runs
+# 
+Average function value over runs =  6.7757e+01 
+Standard deviation over runs     =  2.3543e+01 
+Minimum function value over runs =  2.5869e+01 
+Median function value over runs  =  6.8652e+01 
+Maximum function value over runs =  1.4228e+02 
+
+Function value success criterion =  50.000000    
+Success rate over runs =   26.00% 
+Average distance to optimum =  8.0869e+00    
+
+Time per run: 1.29064 seconds
+-------------------------------------------------------------
+
+

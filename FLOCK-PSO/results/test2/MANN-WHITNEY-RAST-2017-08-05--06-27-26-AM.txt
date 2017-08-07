@@ -1,0 +1,132 @@
+2017-08-05--06-27-26-AM
+
+
+=====================================================
+FUNCTION: RASTRIGIN_FUNCTION
+=====================================================
+
+
+
+-----------------------------------------------------
+FUNCTION VALUE MANN WHITNEY TESTS
+-----------------------------------------------------
+
+
+FUNCTION VALUE FOR RASTRIGIN_FUNCTION
+------------------------------------------------------------------
+  Case 1: # STANDARD PSO
+             #    GB-yesSELF-nBEST -- 30 particles -- 10000 iterations
+  Case 2: # FLOCK PSO
+             # 50 runs -- erage function value over runs =  7.2493e+01  -- andard deviation over runs     =  2.7668e+01 
+             # --------------------------------------------------------------------------------------------
+             # RASTRIGIN_FUNCTION, location of optimum shifted randomly for each run 
+             # FL-yesSELF-nBEST
+             # 30 dimensions
+             # 30 particles
+             # 10000 iterations
+
+Case 1:
+     mean rank (jsc) = 56.9
+Case 2:
+     mean rank (jsc) = 44.1
+
+p (apache) = 0.027382434144051504
+u (apache) = 1570.0
+
+p (jsc) = 0.027624219611282294
+u (jsc) = 930.0
+z (jsc) = -2.2025820586254774
+
+
+
+
+
+-----------------------------------------------------
+DISTANCE FROM GLOBAL OPTIMUM MANN WHITNEY TESTS
+-----------------------------------------------------
+
+
+DISTANCE FROM GLOBAL OPTIMUM FOR RASTRIGIN_FUNCTION
+------------------------------------------------------------------
+  Case 1: # STANDARD PSO
+             #    GB-yesSELF-nBEST -- 30 particles -- 10000 iterations
+  Case 2: # FLOCK PSO
+             # 50 runs -- erage function value over runs =  7.2493e+01  -- andard deviation over runs     =  2.7668e+01 
+             # --------------------------------------------------------------------------------------------
+             # RASTRIGIN_FUNCTION, location of optimum shifted randomly for each run 
+             # FL-yesSELF-nBEST
+             # 30 dimensions
+             # 30 particles
+             # 10000 iterations
+
+Case 1:
+     mean rank (jsc) = 56.9
+Case 2:
+     mean rank (jsc) = 44.1
+
+p (apache) = 0.027382434144051504
+u (apache) = 1570.0
+
+p (jsc) = 0.027624685819088418
+u (jsc) = 930.0
+z (jsc) = -2.2025754502085477
+
+
+
+
+
+-----------------------------------------------------
+CASE INFORMATION
+-----------------------------------------------------
+
+
+# STANDARD PSO
+-------------------------------------------------------------
+# RASTRIGIN_FUNCTION, location of optimum shifted randomly for each run 
+#    GB-yesSELF-nBEST
+# 30 dimensions
+# 30 particles
+# 10000 iterations
+# overall theta = 4.1, constriction = 0.7298437881283576
+# random number generator seed = no seed
+# 50 runs
+# 
+Average function value over runs =  8.0392e+01 
+Standard deviation over runs     =  2.0971e+01 
+Minimum function value over runs =  5.0743e+01 
+Median function value over runs  =  7.9597e+01 
+Maximum function value over runs =  1.2536e+02 
+
+Function value success criterion =  50.000000    
+Success rate over runs =    0.00% 
+Average distance to optimum =  8.8714e+00    
+
+Time per run: 0.69756 seconds
+-------------------------------------------------------------
+
+
+# FLOCK PSO
+-------------------------------------------------------------
+# RASTRIGIN_FUNCTION, location of optimum shifted randomly for each run 
+# FL-yesSELF-nBEST
+# 30 dimensions
+# 30 particles
+# 10000 iterations
+# overall theta = 4.1, constriction = 0.7298437881283576
+# random number generator seed = no seed
+# 50 runs
+# 
+Average function value over runs =  7.2493e+01 
+Standard deviation over runs     =  2.7668e+01 
+Minimum function value over runs =  3.8803e+01 
+Median function value over runs  =  6.2185e+01 
+Maximum function value over runs =  1.5621e+02 
+
+Function value success criterion =  50.000000    
+Success rate over runs =   22.00% 
+Average distance to optimum =  8.3549e+00    
+
+Time per run: 1.2949799999999998 seconds
+-------------------------------------------------------------
+
+
