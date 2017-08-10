@@ -110,7 +110,7 @@ public class Population{
 
 			rand = GPNode.randomVal(0,100);
 			if(rand <= pc){ single_crossover(child1, child2); }
-			mutate(child1, child2);
+			if(rand <= pm){ mutate(child1, child2); }
 
 			child1.fitness = calc_fit(child1, numRuns);
 			child2.fitness = calc_fit(child2, numRuns);
